@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="../js/native_libraries/echarts.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="relation" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    var mapChart = echarts.init(document.getElementById('relation'));
+    mapChart.setOption({
+        backgroundColor: '#1b1b1b',
+        tooltip : {
+            trigger: 'item',
+            formatter: '{b}'
+        },
+        series : [
+            {
+                name: '地点',
+                type: 'map',
+                mapType: 'world',
+                hoverable: false,
+                itemStyle:{
+                    normal:{
+                        borderColor:'rgba(100,149,237,1)',
+                        borderWidth:0.5,
+                        areaStyle:{
+                            color: '#1b1b1b'
+                        }
+                    },
+                    emphasis:{
+                        borderColor:'rgba(255,255,255,1)',
+                        borderWidth:0.5,
+                        areaStyle:{
+                            color: 'transparent'
+                        }
+                    }
+                },
+                data:[],
+                markLine : {
+                    smooth:true,
+                    symbol: ['none', 'none'],
+                    effect : {
+                        show: true,
+                        scaleSize: 1,
+                        period: 30,
+                        color: '#fff',
+                        shadowColor: 'rgba(220,220,220,0.4)',
+                        shadowBlur : 5
+                    },
+                    itemStyle : {
+                        normal: {
+                            borderWidth: 0.05,
+                            lineStyle: {
+                                type: 'solid',
+                                color: 'aqua'
+                            }
+                        }
+                    },
+                    data : eval(objMap)
+                },
+                geoCoord: JSON.parse('{'+ strMap3 +'}')
+            }
+        ]
+    });
+    ---------------------
+        作者：小白物语
+    来源：CSDN
+    原文：https://blog.csdn.net/runningman_7012/article/details/54407263
+        版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+</script>
+</body>
+</html>

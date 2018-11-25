@@ -1,0 +1,87 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>中国地图</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+<script src="../js/native_libraries/d3.v3.min.js"></script>
+<script>
+    var width = 1200;
+    var height = 800;
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(0,0)");
+
+    var projection = d3.geo.mercator()
+        .center([2, 50])
+        .scale(200)
+        .translate([width / 2, height / 2]);
+
+    var path = d3.geo.path()
+        .projection(projection);
+
+
+    var color = d3.scale.category20();
+
+
+    d3.json("../data/world.json", function (error, root) {
+
+        if (error)
+            return console.error(error);
+        console.log(root.features);
+
+        svg.selectAll("path")
+            .data(root.features)
+            .enter()
+            .append("path")
+            .attr("stroke", "#dfdfdf")
+            .attr("stroke-width", 0.2)
+            .attr("fill", function (d, i) {
+                return '#0078b4';
+            })
+            .attr("d", path)
+            .on("mouseover", function (d, i) {
+                // d3.select(this)
+                //     .attr("fill", "yellow");
+
+                x_line
+                    .transition()
+                    .duration(80)
+                    .ease("linear")
+                    .attr("fill","#ffa38a")
+                    // .attr("d",linePath([[0,this.cy.animVal.value],[width,this.cy.animVal.value]]))
+                    .attr("d",linePath([[0,22],[366,343]]))
+
+                console.log(e.cx)
+            })
+            // .on("mouseout", function (d, i) {
+            //     d3.select(this)
+            //         .attr("fill", color(i));
+            // });
+
+
+
+        var linePath=d3.svg.line();
+
+        var x_line=svg.append("path")
+            .attr("stroke","#d72a26")
+            .attr("stroke-width","6px")
+            .attr("fill","#d72a26")
+            .attr("d",linePath([[0,22],[343,343]]))
+
+    });
+
+
+
+
+</script>
+
+</body>
+</html>

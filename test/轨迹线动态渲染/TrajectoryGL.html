@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>车流动态线渲染</title>
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript" src="js/echarts.js"></script>
+<script type="text/javascript" src="js/echarts-gl.js"></script>
+<script src="js/mapbox-gl.js"></script>
+<script type="text/javascript">
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY3JhYmFwcGxlIiwiYSI6ImNqb2xmYXpiczA5OTMzcXRocXBsdnppdTQifQ.jS_2o9Tpidr0wDI07TRj7Q';
+    var myChart = echarts.init(document.getElementById('container'));
+
+    var myguiji=[
+        {'coords':[[104.69588,31.53709],[121.53504, 38.889698]],'lineStyle':{ color: '#397aff'}},
+        {'coords':[[104.69588,31.53709],[-77.4874416, 39.0437567]],'lineStyle':{ color: '#ff1122'}},
+        {'coords':[[104.69588,31.53709],[ 121.53504,30.889698 ]],'lineStyle':{ color: '#52ff45'}},
+        {'coords':[[104.69588,31.53709],[ 101.53504,10.889698 ]],'lineStyle':{ color: '#397aff'}},
+        {'coords':[[104.69588,31.53709],[ -21.53504,60.889698 ]],'lineStyle':{ color: '#ff1e1a'}}
+    ]
+
+    var data={
+        mapbox: {
+            center: [2,50],
+            zoom: 1,
+            //pitch: 50,
+            //bearing: -10,
+            altitudeScale: 1,
+            style: 'mapbox://styles/mapbox/dark-v9',
+            postEffect: {
+                enable: true,
+                SSAO: {
+                    enable: true,
+                    radius: 2,
+                    intensity: 1.5
+                }
+            },
+            light: {
+                main: {
+                    intensity: 0.1,
+                    shadow: true,
+                    shadowQuality: 'high'
+                },
+                ambient: {
+                    intensity: 0.
+                },
+                ambientCubemap: {
+                    exposure: 1,
+                    diffuseIntensity: 0.5
+                }
+            }
+        },
+        series: [{
+            type: 'lines3D',
+            coordinateSystem: 'mapbox',
+            effect: {
+                show: true,
+                constantSpeed: 6,
+                trailWidth: 1,
+                trailLength: 0.3,
+                trailOpacity: 1,
+                spotIntensity: 4
+            },
+            blendMode: 'lighter',
+            polyline: true,
+            lineStyle: {
+                width: 0.1,
+                color: '#397aff',   //'rgb(200, 40, 0)',
+                opacity: 0
+            },
+            data:myguiji
+        }]
+    }
+    myChart.setOption(data);
+    // myguiji=[
+    //     {'coords':[[122.12255,37.505043],[80.12255,37.50503]],'lineStyle':{}}
+    // ]
+    data['series'][0]['data']=myguiji
+
+    myChart.setOption(data);
+</script>
+</body>
+</html>
