@@ -1,5 +1,12 @@
 create_time：2018年11月17日 14点14分
 
+mysql数据库
+地址  www.crabapple.xyz
+端口  3306
+用户名 root
+密码  12345678
+数据库 hightech
+
 
 数据可视化课程作业设计。
 
