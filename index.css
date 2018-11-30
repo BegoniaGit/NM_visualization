@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #container {
+  width: 100%;
+  height: 100%;
+}
+
+#container header{
+  width: 100%;
+  height: 20%;
+  display: table;
+}
+
+.col {
+  width: 30%;
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+    background-color: blueviolet;
+}
+.col.middle{
+  width: 40%;
+  text-align: center;
+    background-color: #3ce266;
+}
+
+.content {
+  height: 79%;
+  width: 100%;
+  display: table;
+    background-color: blueviolet;
+}
+
+.left{
+  width: 60%;
+  height: 100%;
+  display: table-cell;
+    background-color: #e24358;
+}
+
+.right{
+  width: 40%;
+  height: 100%;
+  display: table-cell;
+    background-color: #81ace2;
+}
+
+.left .world_map{
+  width: 100%;
+  height: 40%;
+    background-color: #e2be6b;
+}
+
+.left .list_show{
+  width: 100%;
+  height: 60%;
+    background-color: blueviolet;
+}
+
+.right .text_show{
+  width: 100%;
+  height: 25%;
+    background-color: #97e23d;
+}
+
+.list_statistics{
+  width: 100%;
+  height: 45%;
+    background-color: #377ce2;
+}
+
+.operation{
+  width: 100%;
+  height: 30%;
+    background-color: #e27d9d;
+}
