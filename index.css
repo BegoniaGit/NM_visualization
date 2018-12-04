@@ -10,7 +10,7 @@ html, body, #container {
 
 #container header{
   width: 100%;
-  height: 20%;
+  height: 15%;
   display: table;
 }
 
@@ -19,26 +19,26 @@ html, body, #container {
   height: 100%;
   display: table-cell;
   vertical-align: middle;
-    background-color: blueviolet;
+    background-color: #dae2e2;
 }
 .col.middle{
   width: 40%;
   text-align: center;
-    background-color: #3ce266;
+    background-color: #b7e2b3;
 }
 
 .content {
   height: 79%;
   width: 100%;
   display: table;
-    background-color: blueviolet;
+    background-color: #e2c3d8;
 }
 
 .left{
   width: 60%;
   height: 100%;
   display: table-cell;
-    background-color: #e24358;
+    background-color: #e2ba98;
 }
 
 .right{
@@ -57,19 +57,19 @@ html, body, #container {
 .left .list_show{
   width: 100%;
   height: 60%;
-    background-color: blueviolet;
+    background-color: #e2b6d5;
 }
 
 .right .text_show{
   width: 100%;
   height: 25%;
-    background-color: #97e23d;
+    background-color: #cde2b0;
 }
 
 .list_statistics{
   width: 100%;
   height: 45%;
-    background-color: #377ce2;
+    background-color: #c1c5e2;
 }
 
 .operation{

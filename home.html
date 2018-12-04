@@ -10,14 +10,42 @@
     <header>
         <div class="col"></div>
         <div class="col middle">
-            标题
+            网络监测数据可视化
         </div>
         <div class="col"></div>
     </header>
     <div class="content">
         <div class="left">
-            <div class="world_map"></div>
-            <div class="list_show"></div>
+            <div class="world_map">
+                <table style="width: 100%;height: 100%">
+                    <tr><td style="width: 10%"></td>
+                        <td style="width: 80%"><div id="map" style="width:100%;height: 100%"></div></td>
+                        <td style="width: 20%"></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="list_show">
+                <table style="width: 100%;height: 100%">
+                    <tr style="height: 50%">
+                        <td style="width: 50%">
+                            <div id="filechart" style="width:90%;height: 90%"></div>
+                        </td>
+                        <td>
+                            <div id="database" style="width:90%;height: 90%"></div>
+                        </td>
+                    </tr>
+                    <tr style="height: 50%">
+                        <td>
+                            <div id="httpem" style="width:90%;height: 90%"></div>
+                        </td>
+                        <td>
+                            <div id="ssh" style="width:90%;height: 90%"></div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
         </div>
         <div class="right">
             <div class="text_show"></div>
@@ -25,6 +53,221 @@
             <div class="operation"></div>
         </div>
     </div>
-</div>
+</div><script type="text/javascript" src="js/lib/echarts.js"></script>
+<script type="text/javascript" src="js/lib/echarts-gl.js"></script>
+<script src="js/lib/mapbox-gl.js"></script>
+<script src="js/basechart.js"></script>
+
+<script type="text/javascript">
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY3JhYmFwcGxlIiwiYSI6ImNqb2xmYXpiczA5OTMzcXRocXBsdnppdTQifQ.jS_2o9Tpidr0wDI07TRj7Q';
+    var myChart = echarts.init(document.getElementById('map'));
+
+    var myguiji=[
+        {'coords':[[104.69588,31.53709],[121.53504, 38.889698]],'lineStyle':{ color: '#397aff'}},
+        {'coords':[[104.69588,31.53709],[-77.4874416, 39.0437567]],'lineStyle':{ color: '#ff1122'}},
+        {'coords':[[104.69588,31.53709],[ 121.53504,30.889698 ]],'lineStyle':{ color: '#52ff45'}},
+        {'coords':[[104.69588,31.53709],[ 101.53504,10.889698 ]],'lineStyle':{ color: '#397aff'}},
+        {'coords':[[104.69588,31.53709],[ -21.53504,60.889698 ]],'lineStyle':{ color: '#ff1e1a'}}
+    ]
+    //地图基本参数设置
+    var mapdata={
+        mapbox: {
+            center: [130,40],
+            zoom: 1,
+            //pitch: 50,
+            //bearing: -10,
+            altitudeScale: 1,
+            style: 'mapbox://styles/mapbox/dark-v9',
+            postEffect: {
+                enable: true,
+                SSAO: {
+                    enable: true,
+                    radius: 2,
+                    intensity: 1.5
+                }
+            },
+            light: {
+                main: {
+                    intensity: 0.1,
+                    shadow: true,
+                    shadowQuality: 'high'
+                },
+                ambient: {
+                    intensity: 0.
+                },
+                ambientCubemap: {
+                    exposure: 1,
+                    diffuseIntensity: 0.5
+                }
+            }
+        },
+        series: [{
+            type: 'lines3D',
+            coordinateSystem: 'mapbox',
+            effect: {
+                show: true,
+                constantSpeed: 1,
+                trailWidth: 1,
+                trailLength: 0.1,
+                trailOpacity: 1,
+                spotIntensity: 4
+            },
+            blendMode: 'lighter',
+            polyline: true,
+            lineStyle: {
+                width: 0.1,
+                color: '#397aff',   //'rgb(200, 40, 0)',
+                opacity: 0
+            },
+            data:myguiji
+        }]
+    }
+
+    myChart.setOption(mapdata);
+
+    var filechart = echarts.init(document.getElementById('filechart'));
+    var databasechart = echarts.init(document.getElementById('database'));
+    var httpemchart = echarts.init(document.getElementById('httpem'));
+    var sshchart = echarts.init(document.getElementById('ssh'));
+
+    filechart.setOption(fileData)
+    databasechart.setOption(databaseData)
+    httpemchart.setOption(httpemData)
+    sshchart.setOption(sshData)
+
+    offset=70
+    function loadXMLDoc()
+    {
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+        {
+            // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                redata=JSON.parse(xmlhttp.responseText);
+                mapdata['series'][0]['data']=redata['toplace'];
+                myChart.setOption(mapdata);
+                console.log(redata)
+                console.log(redata['toplace'])
+
+                updateTimeArray(offset-1)
+
+                //file chart
+                let upd=fileData['series'][0]['data']
+                let downd=fileData['series'][1]['data']
+                for(let i=0;i<upd.length-1;i++){
+                    upd[i]=upd[i+1]
+                    downd[i]=downd[i+1]
+                }
+                upd[upd.length-1]=redata['base']['file']['upload']
+                downd[upd.length-1]=redata['base']['file']['download']
+                fileData['series'][0]['data']=upd
+                fileData['series'][1]['data']=downd
+                filechart.setOption(fileData)
+
+
+                // databaseData=JSON.parse(fileData.toString())
+                // httpemData=JSON.parse(fileData.toString())
+                // sshData=JSON.parse(fileData.toString())
+
+                //database chart
+                upd=databaseData['series'][0]['data']
+                downd=databaseData['series'][1]['data']
+                for(let i=0;i<upd.length-1;i++){
+                    upd[i]=upd[i+1]
+                    downd[i]=downd[i+1]
+                }
+                upd[upd.length-1]=redata['base']['database']['upload']
+                downd[upd.length-1]=redata['base']['database']['download']
+                databaseData['series'][0]['data']=upd
+                databaseData['series'][1]['data']=downd
+                databasechart.setOption(databaseData)
+
+                //http email chart
+                upd=httpemData['series'][0]['data']
+                downd=httpemData['series'][1]['data']
+                for(let i=0;i<upd.length-1;i++){
+                    upd[i]=upd[i+1]
+                    downd[i]=downd[i+1]
+                }
+                upd[upd.length-1]=redata['base']['httpem']['upload']
+                downd[upd.length-1]=redata['base']['httpem']['download']
+                httpemData['series'][0]['data']=upd
+                httpemData['series'][1]['data']=downd
+                httpemchart.setOption(httpemData)
+
+
+                //ssh chart
+                upd=sshData['series'][0]['data']
+                downd=sshData['series'][1]['data']
+                for(let i=0;i<upd.length-1;i++){
+                    upd[i]=upd[i+1]
+                    downd[i]=downd[i+1]
+                }
+                upd[upd.length-1]=redata['base']['ssh']['upload']
+                downd[upd.length-1]=redata['base']['ssh']['download']
+                sshData['series'][0]['data']=upd
+                sshData['series'][1]['data']=downd
+                sshchart.setOption(sshData)
+
+            }
+        }
+
+
+
+
+        xmlhttp.open("POST","http://127.0.0.1:5000/tcp",true);
+        xmlhttp.setRequestHeader('Content-Type','application/json')
+        xmlhttp.send(JSON.stringify({"day":1,"offset":offset}));
+        offset++
+        setTimeout(loadXMLDoc, 6000);
+    }
+
+    loadXMLDoc()
+
+
+    /**
+     * 更新时间坐标
+     */
+    function updateTimeArray(offset) {
+
+
+        for (let j = 0; j < timeArray.length - 1; j++) {
+            timeArray[j] = timeArray[j + 1]
+        }
+        timeArray[timeArray.length - 1] = offsetToTime(offset);
+
+        console.log(timeArray)
+        fileData['xAxis'][0]['data']=timeArray
+        databaseData['xAxis'][0]['data']=timeArray
+        httpemData['xAxis'][0]['data']=timeArray
+        sshData['xAxis'][0]['data']=timeArray
+
+    }
+    /**
+     * offset转 时,分
+     */
+    function offsetToTime(offset) {
+
+        hour = parseInt(offset / 6) + 2
+        minu = offset % 6 * 10
+
+        return hour + ":" + minu
+
+    }
+
+
+
+
+</script>
 </body>
 </html>

@@ -1,12 +1,12 @@
 #encoding:utf-8
 # for i in range(5):
 #     print(i)
+import csv
 import time
 
-a={}
-b={"f":666}
-a["a"]=1
-a["a"]=2
-a["a2"]=b
-a["a2"]["f"]=555
-print(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())))
+file=open("met.csv",mode='r',encoding='utf-8-sig')
+data=csv.reader(file)
+he=next(data)
+
+for i in data:
+    print(u"update weblog set type='{}' where host like concat('%{}%');".format(i[1],i[0]))
