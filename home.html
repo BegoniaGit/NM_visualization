@@ -57,6 +57,7 @@
 <script type="text/javascript" src="js/lib/echarts-gl.js"></script>
 <script src="js/lib/mapbox-gl.js"></script>
 <script src="js/basechart.js"></script>
+<script src="js/crabapple.js"></script>
 
 <script type="text/javascript">
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3JhYmFwcGxlIiwiYSI6ImNqb2xmYXpiczA5OTMzcXRocXBsdnppdTQifQ.jS_2o9Tpidr0wDI07TRj7Q';
@@ -235,35 +236,6 @@
     loadXMLDoc()
 
 
-    /**
-     * 更新时间坐标
-     */
-    function updateTimeArray(offset) {
-
-
-        for (let j = 0; j < timeArray.length - 1; j++) {
-            timeArray[j] = timeArray[j + 1]
-        }
-        timeArray[timeArray.length - 1] = offsetToTime(offset);
-
-        console.log(timeArray)
-        fileData['xAxis'][0]['data']=timeArray
-        databaseData['xAxis'][0]['data']=timeArray
-        httpemData['xAxis'][0]['data']=timeArray
-        sshData['xAxis'][0]['data']=timeArray
-
-    }
-    /**
-     * offset转 时,分
-     */
-    function offsetToTime(offset) {
-
-        hour = parseInt(offset / 6) + 2
-        minu = offset % 6 * 10
-
-        return hour + ":" + minu
-
-    }
 
 
 
