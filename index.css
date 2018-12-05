@@ -24,61 +24,61 @@ html, body, #container {
   height: 100%;
   display: table-cell;
   vertical-align: middle;
-    background-color: #dae2e2;
+    background-color: #191a1a;
 }
 .col.middle{
   width: 40%;
   text-align: center;
-    background-color: #b7e2b3;
+    background-color: #191a1a;
 }
 
 .content {
   height: 79%;
   width: 100%;
   display: table;
-    background-color: #e2c3d8;
+    background-color: #191a1a;
 }
 
 .left{
   width: 60%;
   height: 100%;
   display: table-cell;
-    background-color: #e2ba98;
+    background-color: #191a1a;
 }
 
 .right{
   width: 40%;
   height: 100%;
   display: table-cell;
-    background-color: #81ace2;
+    background-color: #191a1a;
 }
 
 .left .world_map{
   width: 100%;
   height: 40%;
-    background-color: #e2be6b;
+    background-color: #191a1a;
 }
 
 .left .list_show{
   width: 100%;
   height: 60%;
-    background-color: #e2b6d5;
+    background-color: #191a1a;
 }
 
 .right .text_show{
   width: 100%;
   height: 25%;
-    background-color: #cde2b0;
+    background-color: #191a1a;
 }
 
 .list_statistics{
   width: 100%;
   height: 45%;
-    background-color: #c1c5e2;
+    background-color: #191a1a;
 }
 
 .operation{
   width: 100%;
   height: 30%;
-    background-color: #e27d9d;
+    background-color: #191a1a;
 }

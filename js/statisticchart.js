@@ -67,7 +67,7 @@ base_proportion_data =  {
     },
     series: {
         type: 'sunburst',
-        data:  [{
+        data: [{
             name: '文件',            // First tree
             value: 10,
             children: [{
@@ -121,7 +121,8 @@ base_proportion_data =  {
         label: {
             rotate: 'radial'
         }
-    }
+        }
+
 };
 
 

@@ -63,7 +63,7 @@ var fileData = {
 
 var databaseData={
     title: {
-        text: '数据库流量'
+        text: '数据库流量/MB'
     },
     tooltip : {
         trigger: 'axis',
@@ -120,7 +120,7 @@ var databaseData={
 
 var httpemData={
     title: {
-        text: 'HTTP传输流量'
+        text: 'HTTP流量/MB'
     },
     tooltip : {
         trigger: 'axis',
@@ -177,7 +177,7 @@ var httpemData={
 
 var sshData={
     title: {
-        text: 'SSH命令流量'
+        text: 'SSH流量/MB'
     },
     tooltip : {
         trigger: 'axis',
