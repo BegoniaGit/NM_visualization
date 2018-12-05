@@ -8,11 +8,16 @@
 <body>
 <div id="container">
     <header>
-        <div class="col"></div>
-        <div class="col middle">
-            网络监测数据可视化
+        <div class="col">
+            <img style="height: 40px;padding-left:10%" src="data/logo_04.png">
         </div>
-        <div class="col"></div>
+        <div class="col middle" >
+            <span style="font-size: 35px;color: aliceblue">网络监测数据可视化</span><br>
+            <span style="font-size: 14px;color: aliceblue">Visualization of Network Monitoring Data </span>
+        </div>
+        <div class="col">
+            <p style="font-size: 13px; height:30px;width: 100% ;text-align: center; "  id="show">
+        </div>
     </header>
     <div class="content">
         <div class="left">
@@ -48,15 +53,41 @@
             </div>
         </div>
         <div class="right">
-            <div class="text_show"></div>
-            <div class="list_statistics"></div>
+            <div class="text_show" style="display: table;">
+                <div style="width: 30%;height: 100%;display: table-cell; background-color: gray;">
+
+                </div>
+                <div style="width: 30%;height: 100%;display: table-cell;background-color: #2c4755">
+
+                </div>
+                <div style="width: 30%;height: 100%;display: table-cell;background-color: green">
+
+                </div>
+            </div>
+            <div class="list_statistics" style="display: table">
+                <div id="baseproportion" style="width:25%;height: 80%;display: table-cell"></div>
+                <div id="wordsproportion" style="width:40%;height: 90%;display: table-cell"></div>
+            </div>
             <div class="operation"></div>
         </div>
     </div>
+    <footer>
+        <div class="col">
+
+        </div>
+        <div class="col middle" >
+            <span style="font-size: 14px;color: aliceblue">copyright© 2018 www.crabapple.xyz</span>
+        </div>
+        <div class="col">
+        </div>
+    </footer>
 </div><script type="text/javascript" src="js/lib/echarts.js"></script>
 <script type="text/javascript" src="js/lib/echarts-gl.js"></script>
 <script src="js/lib/mapbox-gl.js"></script>
+<!--<script src='js/lib/echarts.simple.js'></script>-->
+<script src='js/lib/echarts-wordcloud.js'></script>
 <script src="js/basechart.js"></script>
+<script src="js/statisticchart.js"></script>
 <script src="js/crabapple.js"></script>
 
 <script type="text/javascript">
@@ -124,7 +155,7 @@
         }]
     }
 
-    myChart.setOption(mapdata);
+    //myChart.setOption(mapdata);
 
     var filechart = echarts.init(document.getElementById('filechart'));
     var databasechart = echarts.init(document.getElementById('database'));
@@ -236,7 +267,17 @@
     loadXMLDoc()
 
 
-
+    window.onload = function() {
+        var show = document.getElementById("show");
+        setInterval(function() {
+            var time = new Date();   // 程序计时的月从0开始取值后+1
+            var m = time.getMonth() + 1;
+            var t = time.getFullYear() + "-" + m + "-"
+                + time.getDate() + " " + time.getHours() + ":"
+                + time.getMinutes() + ":" + time.getSeconds();
+            show.innerHTML = t;
+        }, 1000);
+    };
 
 
 

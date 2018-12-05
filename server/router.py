@@ -67,6 +67,12 @@ def tcplog():
     proportion_ssh = 0
     warning_overamount_count = 0
     warning_overtime_count = 0
+    sftp_count=0
+    ftp_count=0
+    mongdb_count=0
+    mysql_count=0
+    tds_count=0
+    postgresal_count=0
     connectcount = len(data)
     toplace = []
     warning_overtime = []
@@ -120,12 +126,23 @@ def tcplog():
             base_file_upload += int(p['uplink_length'] / (1000000))
             base_file_download += int(p['downlink_length'] / (1000000))
             proportion_file += 1
+            if proto == 'sftp':
+                sftp_count+=1
+            else:ftp_count+=1
 
 
         else:
             base_database_upload += int(p['uplink_length']/ (1000000))
             base_database_download += int(p['downlink_length']/ (1000000))
             proportion_database += 1
+            if proto=='mongdb':
+                mongdb_count+=1
+            elif proto=='mysql':
+                mysql_count+=1
+            elif proto=='tds':
+                tds_count+=1
+            else:
+                postgresal_count+=1
 
     print(p['uplink_length'])
 
@@ -150,8 +167,18 @@ def tcplog():
             }
         },
         "proportion": {  # 基本图的次数分类统计换装图6
-            "file": proportion_file,
-            "database": proportion_database,
+            "file": {
+                "count":proportion_file,
+                "sftp":sftp_count,
+                "ftp":ftp_count
+            },
+            "database": {
+                "count":proportion_database,
+                "mongdb_count":mongdb_count,
+                "mysql_count":mysql_count,
+                "tds_count":tds_count,
+                "postgresal_count":postgresal_count
+            },
             "http": proportion_http,
             "email": proportion_email,
             "ssh": proportion_ssh
