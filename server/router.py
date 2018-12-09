@@ -5,11 +5,12 @@ from flask import Flask, request, render_template, jsonify, send_from_directory,
 from flask_cors import CORS
 from config import getResponse, log
 import crabapple as crab
+import re
 import urllib
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-db = pymysql.connect(user='root', db='hightech', passwd='123456', host='www.crabapple.xyz', port=3306, charset='utf8')
+db = pymysql.connect(user='root', db='hightech', passwd='123456', host='localhost', port=3306, charset='utf8')
 
 
 def getCursor():
@@ -28,7 +29,7 @@ def tcplog():
     log("info", pre_time + " " + suff_time)
     data = []
     while True:
-        sql = "select * from tcpLog where stime >=\'{}\' and stime <\'{}\'".format(pre_time, suff_time)
+        sql = u"select * from tcpLog where stime >='{}' and stime <'{}'".format(pre_time, suff_time)
         curous = getCursor()
         curous.execute(sql)
         data = pojo._tcpLog(curous.fetchall())
@@ -39,7 +40,7 @@ def tcplog():
         pre_time, suff_time = crab.getTimes(str(values['day']), offset)
 
     web_data_statistc = []
-    sql = "select type,count(*) from weblog where time >=\'{}\' and time <\'{}\' group by type".format(pre_time,
+    sql = u"select type,count(*) from weblog where time >='{}' and time <'{}' group by type".format(pre_time,
                                                                                                        suff_time)
     curous = getCursor()
     curous.execute(sql)
@@ -157,9 +158,13 @@ def tcplog():
                 "upload": base_database_upload,
                 "download": base_database_download
             },
-            "httpem": {
-                "upload": base_http_upload + base_email_upload,
-                "download": base_http_download + base_email_download
+            "http": {
+                "upload": base_http_upload,
+                "download": base_http_download
+            },
+            "email": {
+                "upload": base_email_upload,
+                "download": base_email_download
             },
             "ssh": {
                 "upload": base_ssh_upload,
@@ -201,9 +206,69 @@ def tcplog():
     return res, 200;
 
 
-@app.route('/get')
-def get_current_user():
-    return jsonify()
+@app.route('/web/behavior',methods=['POST'])
+def webBehavior():
+    req = request
+    values = req.get_json()
+    offset = int(values['offset'])
+    pre_time, suff_time = crab.getOneHour(str(values['day']), offset)
+    log("INFO", pre_time + "::" + suff_time)
+
+    sql = "select * from weblog where time >='{}' and time <'{}'".format(pre_time, suff_time)
+    curous = getCursor()
+    curous.execute(sql)
+    data = pojo._weblog(curous.fetchall())
+
+    warning=[];
+
+    statistics={}
+    elecShop={}
+    live={}
+    game={}
+    for p in data:
+        type=p['type']
+        if  not type ==None:
+            if not type in statistics.keys():
+                statistics[type]=1
+            else:
+                statistics[type]+=1
+
+
+        if type=='直播'or type=='电商'or type=='游戏':
+            strs = re.findall(u'\.\w+\.', p['host'])
+            p['host']=(strs[0][1:len(strs[0]) - 1])
+            name=p['host']
+            if type=='直播':
+                if name in live:
+                    live[name]+=1
+                else:live[name]=1
+            if type=='电商':
+                if name in elecShop:
+                    elecShop[name]+=1
+                else:elecShop[name]=1
+            if type=='游戏':
+                if name in game:
+                    game[name]+=1
+                else:game[name]=1
+            warning.append(p)
+    elecShop =crab.dictSort(elecShop)
+    statistics=crab.dictSort(statistics)
+    rejson={
+        "statistics":statistics,
+        "warning":{
+            "statistics":{
+                "elecShop":elecShop,
+                "live":live,
+                "game":game
+            },
+            "base":warning
+        }
+    }
+    res = getResponse(make_response(str(rejson).replace("\'", "\"")))
+    res.headers['Content-Type'] = "application/json;charset=utf-8"
+    return res,200
+
+
 
 
 if __name__ == "__main__":

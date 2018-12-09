@@ -293,7 +293,6 @@ function indexOf(array, value) {
       }
     }
   }
-
   return -1;
 }
 /**

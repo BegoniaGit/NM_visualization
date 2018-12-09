@@ -11,20 +11,23 @@
         <div class="col">
             <img style="height: 40px;padding-left:10%" src="data/logo_04.png">
         </div>
-        <div class="col middle" >
+        <div class="col middle">
             <span style="font-size: 35px;color: aliceblue">网络监测数据可视化</span><br>
             <span style="font-size: 14px;color: aliceblue">Visualization of Network Monitoring Data </span>
         </div>
         <div class="col">
-            <p style="font-size: 13px; height:30px;width: 100% ;text-align: center; "  id="show">
+            <p style="color: aliceblue;font-size: 13px; height:30px;width: 100% ;text-align: center; " id="show">
         </div>
     </header>
     <div class="content">
         <div class="left">
             <div class="world_map">
                 <table style="width: 100%;height: 100%">
-                    <tr><td style="width: 10%"></td>
-                        <td style="width: 80%"><div id="map" style="width:100%;height: 100%"></div></td>
+                    <tr>
+                        <td style="width: 10%"></td>
+                        <td style="width: 80%">
+                            <div id="map" style="width:100%;height: 100%"></div>
+                        </td>
                         <td style="width: 20%"></td>
                     </tr>
                 </table>
@@ -73,24 +76,24 @@
     </div>
     <footer>
         <div class="col">
-
         </div>
-        <div class="col middle" >
+        <div class="col middle">
             <span style="font-size: 14px;color: aliceblue">copyright© 2018 www.crabapple.xyz</span>
         </div>
         <div class="col">
         </div>
     </footer>
-</div><script type="text/javascript" src="js/lib/echarts.js"></script>
+</div>
+<script type="text/javascript" src="js/lib/echarts.js"></script>
 <script type="text/javascript" src="js/lib/echarts-gl.js"></script>
 <script src="js/lib/mapbox-gl.js"></script>
-<!--<script src='js/lib/echarts.simple.js'></script>-->
 <script src='js/lib/echarts-wordcloud.js'></script>
 <script src="js/basechart.js"></script>
 <script src="js/statisticchart.js"></script>
 <script src="js/crabapple.js"></script>
+<script src="js/home.js"></script>
+<script>
 
-<script type="text/javascript">
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3JhYmFwcGxlIiwiYSI6ImNqb2xmYXpiczA5OTMzcXRocXBsdnppdTQifQ.jS_2o9Tpidr0wDI07TRj7Q';
     var myChart = echarts.init(document.getElementById('map'));
 
@@ -138,6 +141,7 @@
             coordinateSystem: 'mapbox',
             effect: {
                 show: true,
+                period:1,
                 constantSpeed: 1,
                 trailWidth: 1,
                 trailLength: 0.1,
@@ -231,10 +235,20 @@
                     upd[i]=upd[i+1]
                     downd[i]=downd[i+1]
                 }
-                upd[upd.length-1]=redata['base']['httpem']['upload']
-                downd[upd.length-1]=redata['base']['httpem']['download']
+                upd[upd.length-1]=redata['base']['http']['upload']
+                downd[upd.length-1]=redata['base']['http']['download']
                 httpemData['series'][0]['data']=upd
                 httpemData['series'][1]['data']=downd
+                upd=httpemData['series'][2]['data']
+                downd=httpemData['series'][3]['data']
+                for(let i=0;i<upd.length-1;i++){
+                    upd[i]=upd[i+1]
+                    downd[i]=downd[i+1]
+                }
+                upd[upd.length-1]=redata['base']['email']['upload']
+                downd[upd.length-1]=redata['base']['email']['download']
+                httpemData['series'][2]['data']=upd
+                httpemData['series'][3]['data']=downd
                 httpemchart.setOption(httpemData)
 
 
@@ -261,7 +275,7 @@
         xmlhttp.setRequestHeader('Content-Type','application/json')
         xmlhttp.send(JSON.stringify({"day":1,"offset":offset}));
         offset++
-        setTimeout(loadXMLDoc, 6000);
+       // setTimeout(loadXMLDoc, 4000);
     }
 
     loadXMLDoc()
@@ -278,8 +292,6 @@
             show.innerHTML = t;
         }, 1000);
     };
-
-
 
 </script>
 </body>

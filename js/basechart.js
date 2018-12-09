@@ -1,13 +1,15 @@
-
 //基本信息图参数设置
 
-timeArray=['','','','','','','']
+timeArray = ['', '', '', '', '', '', '']
 
 var fileData = {
     title: {
-        text: '文件流量/MB'
+        text: '文件流量/MB',
+        textStyle:{
+            color:'#fff'
+        }
     },
-    tooltip : {
+    tooltip: {
         trigger: 'axis',
         axisPointer: {
             type: 'cross',
@@ -17,12 +19,7 @@ var fileData = {
         }
     },
     legend: {
-        data:['文件流量上行','文件流量下行']
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
+        data: ['文件流量上行', '文件流量下行']
     },
     grid: {
         left: '3%',
@@ -30,42 +27,55 @@ var fileData = {
         bottom: '3%',
         containLabel: true
     },
-    xAxis : [
+    xAxis: [
         {
-            type : 'category',
-            boundaryGap : false,
-            data : ['','','','','','','']
+            type: 'category',
+            boundaryGap: false,
+            data: ['', '', '', '', '', '', '']
         }
     ],
-    yAxis : [
+    yAxis: [
         {
-            type : 'value'
+            type: 'value',
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    // 使用深浅的间隔色
+                    color: ['#424242']
+                }
+            }
         }
     ],
-    series : [
+    series: [
         {
-            name:'文件流量上行',
-            type:'line',
+            name: '文件流量上行',
+            type: 'line',
             stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top'
+                }
+            },
             areaStyle: {},
-            data:[0, 0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
-            name:'文件流量下行',
-            type:'line',
+            name: '文件流量下行',
+            type: 'line',
             stack: '总量',
             areaStyle: {},
-            data:[0, 0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0, 0]
         }
     ]
 };
 
 
-var databaseData={
+var databaseData = {
     title: {
         text: '数据库流量/MB'
     },
-    tooltip : {
+    tooltip: {
         trigger: 'axis',
         axisPointer: {
             type: 'cross',
@@ -75,12 +85,7 @@ var databaseData={
         }
     },
     legend: {
-        data:['数据库流量上行','数据库流量下行']
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
+        data: ['数据库流量上行', '数据库流量下行']
     },
     grid: {
         left: '3%',
@@ -88,41 +93,49 @@ var databaseData={
         bottom: '3%',
         containLabel: true
     },
-    xAxis : [
+    xAxis: [
         {
-            type : 'category',
-            boundaryGap : false,
-            data : ['','','','','','','']
+            type: 'category',
+            boundaryGap: false,
+            data: ['', '', '', '', '', '', '']
         }
     ],
-    yAxis : [
+    yAxis: [
         {
-            type : 'value'
+            type: 'value',
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    // 使用深浅的间隔色
+                    color: ['#424242']
+                }
+            }
         }
     ],
-    series : [
+    series: [
         {
-            name:'数据库流量上行',
-            type:'line',
+            name: '数据库流量上行',
+            type: 'line',
             stack: '总量',
             areaStyle: {},
-            data:[0, 0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
-            name:'数据库流量下行',
-            type:'line',
+            name: '数据库流量下行',
+            type: 'line',
             stack: '总量',
             areaStyle: {},
-            data:[0, 0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0, 0]
         }
     ]
 };
 
-var httpemData={
+var httpemData = {
     title: {
-        text: 'HTTP流量/MB'
+        text: 'http及邮件流量/MB',
+        left: 12
     },
-    tooltip : {
+    tooltip: {
         trigger: 'axis',
         axisPointer: {
             type: 'cross',
@@ -132,54 +145,83 @@ var httpemData={
         }
     },
     legend: {
-        data:['HTTP上行','HTTP下行']
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
+        data: ['http上行', 'http下行', "邮箱上行", "邮箱下行"],
+        right: 2,
+        itemWidth: 7,
+        itemHeight: 7,
+        textStyle: {
+            fontSize: 10
         }
     },
+    // toolbox: {
+    //     feature: {
+    //         saveAsImage: {}
+    //     }
+    // },
     grid: {
         left: '3%',
         right: '4%',
         bottom: '3%',
-        containLabel: true
+        containLabel: true,
+        show: false,
+
     },
-    xAxis : [
+    xAxis: [
         {
-            type : 'category',
-            boundaryGap : false,
-            data : ['','','','','','','']
+            type: 'category',
+            boundaryGap: false,
+            data: ['', '', '', '', '', '', '']
         }
     ],
-    yAxis : [
+    yAxis: [
         {
-            type : 'value'
+            type: 'value',
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    // 使用深浅的间隔色
+                    color: ['#424242']
+                }
+            }
         }
     ],
-    series : [
+    series: [
         {
-            name:'HTTP流量上行',
-            type:'line',
+            name: 'http上行',
+            type: 'line',
             stack: '总量',
             areaStyle: {},
-            data:[0, 0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
-            name:'HTTP流量下行',
-            type:'line',
+            name: 'http下行',
+            type: 'line',
             stack: '总量',
             areaStyle: {},
-            data:[0, 0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0, 0]
+        },
+        {
+            name: '邮箱上行',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            data: [0, 0, 0, 0, 0, 0, 0]
+        },
+        {
+            name: '邮箱下行',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            data: [0, 0, 0, 0, 0, 0, 0]
         }
     ]
 };
 
-var sshData={
+var sshData = {
     title: {
         text: 'SSH流量/MB'
     },
-    tooltip : {
+    tooltip: {
         trigger: 'axis',
         axisPointer: {
             type: 'cross',
@@ -189,45 +231,48 @@ var sshData={
         }
     },
     legend: {
-        data:['SSH命令流量上行','SSH命令流量下行']
+        data: ['SSH命令流量上行', 'SSH命令流量下行']
     },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
-    },
+
     grid: {
         left: '3%',
         right: '4%',
         bottom: '3%',
         containLabel: true
     },
-    xAxis : [
+    xAxis: [
         {
-            type : 'category',
-            boundaryGap : false,
-            data : ['','','','','','','']
+            type: 'category',
+            boundaryGap: false,
+            data: ['', '', '', '', '', '', '']
         }
     ],
-    yAxis : [
+    yAxis: [
         {
-            type : 'value'
+            type: 'value',
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    // 使用深浅的间隔色
+                    color: ['#424242']
+                }
+            }
         }
     ],
-    series : [
+    series: [
         {
-            name:'SSH命令流量上行',
-            type:'line',
+            name: 'SSH命令流量上行',
+            type: 'line',
             stack: '总量',
             areaStyle: {},
-            data:[0, 0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0, 0]
         },
         {
-            name:'SSH命令流量下行',
-            type:'line',
+            name: 'SSH命令流量下行',
+            type: 'line',
             stack: '总量',
             areaStyle: {},
-            data:[0, 0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0, 0]
         }
     ]
 };

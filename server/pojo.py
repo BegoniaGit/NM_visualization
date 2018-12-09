@@ -17,7 +17,7 @@ def _tcpLog(data):
     return toList(model,data)
 
 def _weblog(data):
-    model=['time','sip','sport','dip','dport','host']
+    model=['time','sip','sport','dip','dport','host','type']
     return toList(model,data)
 
 def toList(model,data):

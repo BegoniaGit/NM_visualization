@@ -65,6 +65,15 @@ base_proportion_data =  {
             color: ['#2D5F73', '#538EA6', '#F2D1B3', '#F2B8A2', '#F28C8C']
         }
     },
+    legend: {
+
+
+        itemWidth:7,
+        itemHeight:7,
+        textStyle:{
+            fontSize: 10
+        }
+    },
     series: {
         type: 'sunburst',
         data: [{
