@@ -29,7 +29,7 @@ def tcplog():
     log("info", pre_time + " " + suff_time)
     data = []
     while True:
-        sql = u"select * from tcpLog where stime >='{}' and stime <'{}'".format(pre_time, suff_time)
+        sql = u"select * from tcplog where stime >='{}' and stime <'{}'".format(pre_time, suff_time)
         curous = getCursor()
         curous.execute(sql)
         data = pojo._tcpLog(curous.fetchall())

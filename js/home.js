@@ -195,7 +195,7 @@ function loadXMLDoc()
             console.log(redata)
             console.log(redata['toplace'])
 
-            updateTimeArray(offset-1)
+            updateTimeArray(req_offset-1)
 
             //file chart
             let upd=fileData['series'][0]['data']
@@ -274,8 +274,8 @@ function loadXMLDoc()
     xmlhttp.open("POST","http://127.0.0.1:5000/tcp",true);
     xmlhttp.setRequestHeader('Content-Type','application/json')
     xmlhttp.send(JSON.stringify({"day":1,"offset":req_offset}));
-    req_offset
-    // setTimeout(loadXMLDoc, 4000);
+    req_offset++
+    setTimeout(loadXMLDoc, 5000);
 }
 
 loadXMLDoc()
