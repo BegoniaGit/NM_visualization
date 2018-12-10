@@ -6,11 +6,11 @@ from flask_cors import CORS
 from config import getResponse, log
 import crabapple as crab
 import re
-import urllib
+
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-db = pymysql.connect(user='root', db='hightech', passwd='123456', host='localhost', port=3306, charset='utf8')
+db = pymysql.connect(user='root', db='sys', passwd='Gssc123', host='220.166.61.4', port=9906, charset='utf8')
 
 
 def getCursor():
