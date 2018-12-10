@@ -31,3 +31,23 @@ function offsetToTime(offset) {
     return hour + ":" + minu
 
 }
+
+function offset_to_time(offset) {
+    let start_hour = Math.floor(((offset) / 6) + 2)
+    let start_minu = offset % 6 * 10
+    let end_hour = start_hour
+    let end_minu = start_minu + 10
+    if (end_minu == 60) {
+        end_minu = 0
+        end_hour++
+    }
+    start_hour = start_hour.toString()
+    start_minu = start_minu.toString()
+    end_hour = end_hour.toString()
+    end_minu = end_minu.toString()
+    start_hour = start_hour.length < 2 ? '0' + start_hour : start_hour
+    start_minu = start_minu.length < 2 ? '0' + start_minu : start_minu
+    end_hour = end_hour.length < 2 ? '0' + end_hour : end_hour
+    end_minu = end_minu.length < 2 ? '0' + end_minu : end_minu
+    return start_hour+":"+start_minu+"--"+end_hour+":"+end_minu
+}

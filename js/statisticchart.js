@@ -62,7 +62,7 @@ base_proportion_data =  {
         min: 0,
         max: 10,
         inRange: {
-            color: ['#2D5F73', '#538EA6', '#F2D1B3', '#F2B8A2', '#F28C8C']
+            color: [ '#2256a6','#a5a0aa']
         }
     },
     legend: {

@@ -201,8 +201,6 @@ def tcplog():
     }
 
     res = getResponse(make_response(str(rejson).replace("\'", "\"")))
-    res.headers['Access-Control-Allow-Origin'] = "*"
-    res.headers['Content-Type'] = "application/json;charset=utf-8"
     return res, 200;
 
 
@@ -236,7 +234,11 @@ def webBehavior():
 
         if type=='直播'or type=='电商'or type=='游戏':
             strs = re.findall(u'\.\w+\.', p['host'])
-            p['host']=(strs[0][1:len(strs[0]) - 1])
+            p['host']
+            try:
+                p['host']=(strs[0][1:len(strs[0]) - 1])
+            except:
+                p['host']='othor'
             name=p['host']
             if type=='直播':
                 if name in live:

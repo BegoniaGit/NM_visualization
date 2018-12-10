@@ -50,7 +50,7 @@ html, body, #container {
   width: 40%;
   height: 100%;
   display: table-cell;
-    background-color: #191a1a;
+    background-color: #9d9397;
 }
 
 .left .world_map{
@@ -68,7 +68,10 @@ html, body, #container {
 .right .text_show{
   width: 100%;
   height: 25%;
-    background-color: #191a1a;
+  background-color: #0f913a;
+  font-size: 110%;
+  font-family: 黑体;
+
 }
 
 .list_statistics{
@@ -81,4 +84,7 @@ html, body, #container {
   width: 100%;
   height: 30%;
     background-color: #191a1a;
+}
+table{
+    width: 100%;
 }
