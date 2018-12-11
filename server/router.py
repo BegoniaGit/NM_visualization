@@ -100,32 +100,32 @@ def tcplog():
                      "country": p['country'], "city": p['city']})
             else:
                 warning_overamount.append({"sip": p['sip'], "tip": p['dip'], "type": "downlink",
-                                           "overamount": p['downlink_length', "country":p['country'],
-                                                         "city":p['city']]})
+                                           "overamount": p['downlink_length'], "country":p['country'],
+                                                         "city":p['city']})
             warning_overamount_count += 1
 
         proto = p['proto']
         if proto == 'smtps':
-            base_email_upload += int(p['uplink_length']/ (1000000))
-            base_email_download += int(p['downlink_length']/ (1000000))
+            base_email_upload += int(p['uplink_length'])
+            base_email_download += int(p['downlink_length'])
             proportion_email += 1
 
 
         elif proto == 'http':
-            base_http_upload += int(p['uplink_length']/ (1000000))
-            base_http_download += int(p['downlink_length']/ (1000000))
+            base_http_upload += int(p['uplink_length'])
+            base_http_download += int(p['downlink_length'])
             proportion_http += 1
 
 
         elif proto == 'ssh':
-            base_ssh_upload += int(p['uplink_length']/ (1000000))
-            base_ssh_download += int(p['downlink_length']/ (1000000))
+            base_ssh_upload += int(p['uplink_length'])
+            base_ssh_download += int(p['downlink_length'])
             proportion_ssh += 1
 
 
         elif proto == 'sftp' or proto == 'ftp':
-            base_file_upload += int(p['uplink_length'] / (1000000))
-            base_file_download += int(p['downlink_length'] / (1000000))
+            base_file_upload += int(p['uplink_length'] )
+            base_file_download += int(p['downlink_length'])
             proportion_file += 1
             if proto == 'sftp':
                 sftp_count+=1
@@ -133,8 +133,8 @@ def tcplog():
 
 
         else:
-            base_database_upload += int(p['uplink_length']/ (1000000))
-            base_database_download += int(p['downlink_length']/ (1000000))
+            base_database_upload += int(p['uplink_length'])
+            base_database_download += int(p['downlink_length'])
             proportion_database += 1
             if proto=='mongdb':
                 mongdb_count+=1
@@ -216,7 +216,7 @@ def webBehavior():
     curous = getCursor()
     curous.execute(sql)
     data = pojo._weblog(curous.fetchall())
-
+    print(data)
     warning=[];
 
     statistics={}
@@ -275,4 +275,4 @@ def webBehavior():
 
 if __name__ == "__main__":
     app.config['JSON_AS_ASCII'] = False
-    app.run(debug=True)
+    app.run(debug=False)

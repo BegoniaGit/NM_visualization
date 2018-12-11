@@ -13,7 +13,7 @@ def _login(data):
     return toList(model,data)
 
 def _tcpLog(data):
-    model=['stime','dtime','proto','dip','port','sip','sport','uplink_length','downlink_length','lo','la','over_time','over_amount']
+    model=['stime','dtime','proto','dip','port','sip','sport','uplink_length','downlink_length','lo','la','over_time','over_amount','country','city']
     return toList(model,data)
 
 def _weblog(data):
