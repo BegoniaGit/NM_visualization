@@ -11,6 +11,7 @@ import re
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 db = pymysql.connect(user='root', db='sys', passwd='Gssc123', host='220.166.61.4', port=9906, charset='utf8')
+# db = pymysql.connect(user='root', db='hightech', passwd='123456', host='localhost', port=3306, charset='utf8')
 
 
 def getCursor():
@@ -89,6 +90,8 @@ def tcplog():
 
         toplace.append({'coords': [[local_lo, local_la], [p['lo'], p['la']]]})
 
+        if p['city']==None:
+            p['city']='None'
         if p['over_time'] == 1:
             warning_overtime.append(
                 {"sip": p['sip'], "tip": p['dip'], "overtime": 123, "country": p['country'], "city": p['city']})
@@ -97,7 +100,7 @@ def tcplog():
             if p['over_amount'] == 1:
                 warning_overamount.append(
                     {"sip": p['sip'], "tip": p['dip'], "type": "uplink", "overamount": p['uplink_length'],
-                     "country": p['country'], "city": p['city']})
+                     "country": p['country']})
             else:
                 warning_overamount.append({"sip": p['sip'], "tip": p['dip'], "type": "downlink",
                                            "overamount": p['downlink_length'], "country":p['country'],

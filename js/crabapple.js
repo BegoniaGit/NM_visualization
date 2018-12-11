@@ -1,7 +1,6 @@
 //自定义方法
 
 
-
 /**
  * 更新时间坐标
  */
@@ -14,12 +13,13 @@ function updateTimeArray(offset) {
     timeArray[timeArray.length - 1] = offsetToTime(offset);
 
     console.log(timeArray)
-    fileData['xAxis'][0]['data']=timeArray
-    databaseData['xAxis'][0]['data']=timeArray
-    httpemData['xAxis'][0]['data']=timeArray
-    sshData['xAxis'][0]['data']=timeArray
+    fileData['xAxis'][0]['data'] = timeArray
+    databaseData['xAxis'][0]['data'] = timeArray
+    httpemData['xAxis'][0]['data'] = timeArray
+    sshData['xAxis'][0]['data'] = timeArray
 
 }
+
 /**
  * offset转 时,分
  */
@@ -49,5 +49,39 @@ function offset_to_time(offset) {
     start_minu = start_minu.length < 2 ? '0' + start_minu : start_minu
     end_hour = end_hour.length < 2 ? '0' + end_hour : end_hour
     end_minu = end_minu.length < 2 ? '0' + end_minu : end_minu
-    return start_hour+":"+start_minu+"--"+end_hour+":"+end_minu
+    return start_hour + ":" + start_minu + "--" + end_hour + ":" + end_minu
 }
+
+
+/**
+ * 更新时间
+ * @param offset
+ */
+let el_show_time=document.getElementById("map_time")
+function update_req_time(offset) {
+
+    //更新展示时间
+    el_show_time.innerHTML=req_day+'日'+' '+offset_to_time(offset)
+
+    req_offset = (parseInt(offset))
+    if (req_offset > 125) {
+        req_offset = 31
+        req_day++
+    }
+    req_offset++
+}
+
+/**
+ * 时间展示函数
+ */
+window.onload = function() {
+    var show = document.getElementById("show");
+    setInterval(function() {
+        var time = new Date();   // 程序计时的月从0开始取值后+1
+        var m = time.getMonth() + 1;
+        var t = time.getFullYear() + "-" + m + "-"
+            + time.getDate() + " " + time.getHours() + ":"
+            + time.getMinutes() + ":" + time.getSeconds();
+        show.innerHTML = t;
+    }, 1000);
+};

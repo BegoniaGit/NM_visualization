@@ -21,124 +21,91 @@
     </header>
     <div class="content">
         <div class="left">
-            <div class="world_map">
-                <table style="width: 100%;height: 100%">
-                    <tr>
-                        <td style="width: 10%"></td>
-                        <td style="width: 80%">
-                            <div id="map" style="width:100%;height: 100%"></div>
-                        </td>
-                        <td style="width: 20%"></td>
-                    </tr>
-                </table>
+            <div class="world_map"id="map" >
+               <!--<div style="width: 80%;height: 100%" id="map">-->
 
             </div>
+            <span id="map_time" style="padding-left:77%;color: aliceblue;font-size: 30px">1日 07:00-07:10</span>
             <div class="list_show">
-                <table style="width: 100%;height: 100%">
-                    <tr style="height: 50%">
-                        <td style="width: 50%">
-                            <div id="filechart" style="width:90%;height: 90%"></div>
-                        </td>
-                        <td>
-                            <div id="database" style="width:90%;height: 90%"></div>
-                        </td>
-                    </tr>
-                    <tr style="height: 50%">
-                        <td>
-                            <div id="httpem" style="width:90%;height: 90%"></div>
-                        </td>
-                        <td>
-                            <div id="ssh" style="width:90%;height: 90%"></div>
-                        </td>
-                    </tr>
-                </table>
+
+                <div style="width: 100%;height: 50%;display: table">
+                    <div style="width: 50%;height: 100%;display: table-cell;">
+                        <div id="filechart" style="width:90%;height: 90%"></div>
+                    </div>
+                    <div style="width: 50%;height: 100%;display: table-cell;">
+                        <div id="database" style="width:90%;height: 90%"></div>
+                    </div>
+                </div>
+                <div style="width: 100%;height: 50%;display: table">
+                    <div style="width: 50%;height: 100%;display: table-cell;">
+                        <div id="httpem" style="width:90%;height: 90%"></div>
+                    </div>
+                    <div style="width: 50%;height: 100%;display: table-cell;">
+                        <div id="ssh" style="width:90%;height: 90%"></div>
+                    </div>
+                </div>
+                <!--<table style="width: 100%;height: 100%">-->
+                    <!--<tr style="height: 50%">-->
+                        <!--<td style="width: 50%">-->
+                            <!--<div id="filechart" style="width:90%;height: 90%"></div>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<div id="database" style="width:90%;height: 90%"></div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr style="height: 50%">-->
+                        <!--<td>-->
+                            <!--<div id="httpem" style="width:90%;height: 90%"></div>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<div id="ssh" style="width:90%;height: 90%"></div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
 
             </div>
         </div>
 
         <!--右侧统计-->
         <div class="right">
-            <div class="text_show" style="display: table;">
-                <div style="width: 30%;height: 100%;display: table-cell; background-color: gray;text-align: center">
-                    <span style="">网络基本信息:</span>
-                    <table style="">
-                        <tr>
-                            <td>网络总连接数:</td>
-                            <td id="connectcount_total">234</td>
-                        </tr>
-                        <tr>
-                            <td>流量上行总量:</td>
-                            <td id="uplink_amount_count">234</td>
-                        </tr>
-                        <tr>
-                            <td>流量下行总量:</td>
-                            <td id="downlink_amount_count">234</td>
-                        </tr>
-                    </table>
+            <div class="text_show" style="display: table;padding: auto">
+                <div style="width: 33%;height: 100%;display: table-cell;color: cornflowerblue;">
+                    <span style="">网络基本信息</span><br>
+                    <span>网络总连接数:</span><span id="connectcount_total"></span><br>
+                    <span>流量上行总量:</span><span id="uplink_amount_count"></span><br>
+                    <span>流量下行总量:</span><span id="downlink_amount_count"></span>
                 </div>
-                <div style="width: 30%;height: 100%;display: table-cell;background-color: #2c4755;text-align: center">
-                    <span>危险访问及邮件</span>
-                    <table>
-                        <tr>
-                            <td>邮箱诈骗信息总量:</td>
-                            <td id="email_risk_count">234</td>
-                        </tr>
-                        <tr>
-                            <td>非工作网站请求总量:</td>
-                            <td id="not_worknet_count">234</td>
-                        </tr>
-                    </table>
+                <div style="width: 33%;height: 100%;display: table-cell;color: #f24b43">
+                    <span>危险访问及邮件</span><br>
+                    <span>邮箱诈骗信息总量:</span><span id="email_risk_count"></span><br>
+                    <span>非工作网站请求总量:</span><span id="not_worknet_count"></span>
                 </div>
-                <div style="width: 30%;height: 100%;display: table-cell;background-color: green;text-align: center">
-                    <span>网络流量警告</span>
-                    <table>
-                        <tr>
-                            <td>网络超时连接总量:</td>
-                            <td id="overtime_count">234</td>
-                        </tr>
-                        <tr>
-                            <td>高流量连接总量:</td>
-                            <td id="overamount_count">234</td>
-                        </tr>
-                    </table>
+                <div style="width: 33%;height: 100%;display: table-cell;color: darkorange">
+                    <span>网络流量警告</span><br>
+                    <span>网络超时连接总量:</span><span id="overtime_count"></span><br>
+                    <span>高流量连接总量:</span><span id="overamount_count"></span>
                 </div>
             </div>
             <div class="list_statistics" style="display: table">
                 <div id="baseproportion" style="width:25%;height: 80%;display: table-cell"></div>
                 <div id="wordsproportion" style="width:40%;height: 90%;display: table-cell"></div>
             </div>
-            <div class="operation" style="padding-bottom: 10px;height: 170px;background-color: #2c4755">
-                <table>
-                    <tr>
-                        <td>
-                            <h4>时间选择</h4>
-                            <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">日&nbsp&nbsp&nbsp期 :&nbsp<select id="day_select" onchange="change_day_select()"></select></h6>
-                            <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">时间段:&nbsp<select id="time_select" onchange="change_time_select()"></select></h6>
-                        </td>
-                        <td>
-                            <button onclick="dynamic()" style="margin: 10px">监测动态</button><br>
-                            <button onclick="dynamic()" style="margin: 10px">选择监测</button>
-                        </td>
-                        <td style="width:60%"></td>
+            <div class="operation" style="padding-bottom: 10px;background-color: #2c4755;display: table;">
+                <div style="width: 60%;height: 100%;display: table-cell;">
+                    <h4>时间选择</h4>
+                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">日&nbsp&nbsp&nbsp期 :&nbsp<select id="day_select" onchange="change_day_select()"></select></h6>
+                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">时间段:&nbsp<select id="time_select" onchange="change_time_select()"></select></h6>
+                    <button onclick="dynamic()" style="margin: 10px">监测动态</button>
+                    <button onclick="choice_dynamic()" style="margin: 10px">选择监测</button>
+                    <button onclick="dynamic_pause()" style="margin: 10px">暂停监测</button>
 
-                    </tr>
-                    <>
-
-                        <td>
-                            <h4>分类查看</h4>
-                            <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">分&nbsp&nbsp&nbsp类:&nbsp<select id="class_select" onchange="change_class_select()"></select></h6>
-                            <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">细&nbsp&nbsp&nbsp目:&nbsp<select id="detail_select" onchange="chnageName()"></select></h6>
-                        </td>
-                        <td>
-                            <button onclick="start_look()" style="margin: 10px">选择查看</button>
-                        </td>
-                        <td style="width:60%"></td>
-                    </tr>
-
-                </table>
-
-
-
+                </div>
+                <div style="width: 40%;height: 100%;display: table-cell;">
+                    <h4>分类查看</h4>
+                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">分&nbsp&nbsp&nbsp类:&nbsp<select id="class_select" onchange="change_class_select()"></select></h6>
+                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">细&nbsp&nbsp&nbsp目:&nbsp<select id="detail_select" onchange="chnageName()"></select></h6>
+                    <button onclick="start_look()" style="margin: 10px">选择查看</button>
+                </div>
             </div>
         </div>
     </div>
@@ -153,6 +120,7 @@
         </div>
     </footer>
 </div>
+</body>
 <script type="text/javascript" src="js/lib/echarts.js"></script>
 <script type="text/javascript" src="js/lib/echarts-gl.js"></script>
 <script src="js/lib/mapbox-gl.js"></script>
@@ -166,5 +134,4 @@
 
 
 </script>
-</body>
 </html>
