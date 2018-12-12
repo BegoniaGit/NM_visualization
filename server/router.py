@@ -7,11 +7,12 @@ from config import getResponse, log
 import crabapple as crab
 import re
 
-
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-db = pymysql.connect(user='root', db='sys', passwd='Gssc123', host='220.166.61.4', port=9906, charset='utf8')
-# db = pymysql.connect(user='root', db='hightech', passwd='123456', host='localhost', port=3306, charset='utf8')
+# db = pymysql.connect(user='root', db='sys', passwd='Gssc123', host='220.166.61.4', port=9906, charset='utf8')
+
+
+db = pymysql.connect(user='root', db='hightech', passwd='123456', host='localhost', port=3306, charset='utf8')
 
 
 def getCursor():
@@ -42,7 +43,7 @@ def tcplog():
 
     web_data_statistc = []
     sql = u"select type,count(*) from weblog where time >='{}' and time <'{}' group by type".format(pre_time,
-                                                                                                       suff_time)
+                                                                                                    suff_time)
     curous = getCursor()
     curous.execute(sql)
     web_data_temp = (curous.fetchall())
@@ -69,12 +70,12 @@ def tcplog():
     proportion_ssh = 0
     warning_overamount_count = 0
     warning_overtime_count = 0
-    sftp_count=0
-    ftp_count=0
-    mongdb_count=0
-    mysql_count=0
-    tds_count=0
-    postgresal_count=0
+    sftp_count = 0
+    ftp_count = 0
+    mongdb_count = 0
+    mysql_count = 0
+    tds_count = 0
+    postgresal_count = 0
     connectcount = len(data)
     toplace = []
     warning_overtime = []
@@ -90,21 +91,22 @@ def tcplog():
 
         toplace.append({'coords': [[local_lo, local_la], [p['lo'], p['la']]]})
 
-        if p['city']==None:
-            p['city']='None'
-        if p['over_time'] == 1:
+        if p['city'] == None:
+            p['city'] = 'None'
+        if p['over_time'] == '1':
+            print('============over_time============')
             warning_overtime.append(
-                {"sip": p['sip'], "tip": p['dip'], "overtime": 123, "country": p['country'], "city": p['city']})
+                {"sip": p['sip'], "tip": p['dip'],"category":p['category'], "overtime": 123, "country": p['country'], "city": p['city']})
             warning_overtime_count += 1
-        if p['over_amount'] != 0:
-            if p['over_amount'] == 1:
+        if p['over_amount'] != '0':
+            if p['over_amount'] == '1':
                 warning_overamount.append(
-                    {"sip": p['sip'], "tip": p['dip'], "type": "uplink", "overamount": p['uplink_length'],
-                     "country": p['country']})
+                    {"sip": p['sip'], "tip": p['dip'],"category":p['category'], "type": "uplink", "overamount": p['uplink_length'],
+                     "country": p['country'],"city": p['city']})
             else:
-                warning_overamount.append({"sip": p['sip'], "tip": p['dip'], "type": "downlink",
-                                           "overamount": p['downlink_length'], "country":p['country'],
-                                                         "city":p['city']})
+                warning_overamount.append({"sip": p['sip'],"category":p['category'], "tip": p['dip'], "type": "downlink",
+                                           "overamount": p['downlink_length'], "country": p['country'],
+                                           "city": p['city']})
             warning_overamount_count += 1
 
         proto = p['proto']
@@ -127,26 +129,27 @@ def tcplog():
 
 
         elif proto == 'sftp' or proto == 'ftp':
-            base_file_upload += int(p['uplink_length'] )
+            base_file_upload += int(p['uplink_length'])
             base_file_download += int(p['downlink_length'])
             proportion_file += 1
             if proto == 'sftp':
-                sftp_count+=1
-            else:ftp_count+=1
+                sftp_count += 1
+            else:
+                ftp_count += 1
 
 
         else:
             base_database_upload += int(p['uplink_length'])
             base_database_download += int(p['downlink_length'])
             proportion_database += 1
-            if proto=='mongdb':
-                mongdb_count+=1
-            elif proto=='mysql':
-                mysql_count+=1
-            elif proto=='tds':
-                tds_count+=1
+            if proto == 'mongdb':
+                mongdb_count += 1
+            elif proto == 'mysql':
+                mysql_count += 1
+            elif proto == 'tds':
+                tds_count += 1
             else:
-                postgresal_count+=1
+                postgresal_count += 1
 
     print(p['uplink_length'])
 
@@ -174,23 +177,51 @@ def tcplog():
                 "download": base_ssh_download
             }
         },
-        "proportion": {  # 基本图的次数分类统计换装图6
-            "file": {
-                "count":proportion_file,
-                "sftp":sftp_count,
-                "ftp":ftp_count
+        "proportion":
+            [{
+                "name": '文件',
+                "value": proportion_file,
+                "children": [{
+                    "name": 'sftp传输',
+                    "value": sftp_count
+                }, {
+                    "name": 'ftp传输',
+
+                    "value": ftp_count
+                }]
+            }, {
+                "name": '数据库',
+                "value": proportion_database,
+                "children": [{
+                    "name": 'mongdb协议',
+                    "value": mongdb_count,
+                    },
+                    {
+                        "name": 'mysql协议',
+                        "value": mysql_count,
+                    },
+                    {
+                        "name": 'tds协议',
+                        "value": tds_count,
+                    },
+                    {
+                        "name": 'postgresal协议',
+                        "value": postgresal_count,
+                    }]
             },
-            "database": {
-                "count":proportion_database,
-                "mongdb_count":mongdb_count,
-                "mysql_count":mysql_count,
-                "tds_count":tds_count,
-                "postgresal_count":postgresal_count
-            },
-            "http": proportion_http,
-            "email": proportion_email,
-            "ssh": proportion_ssh
-        },
+                {
+                    "name": 'http',
+                    "value": proportion_http,
+                },
+                {
+                    "name": 'email',
+                    "value": proportion_email,
+                },
+                {
+                    "name": 'ssh',
+                    "value": proportion_ssh,
+                }
+            ],
         "connectcount": connectcount,  # 当前时间段内请求次数
         "toplace": toplace,  # 地图经纬信息
 
@@ -207,7 +238,7 @@ def tcplog():
     return res, 200;
 
 
-@app.route('/web/behavior',methods=['POST'])
+@app.route('/web/behavior', methods=['POST'])
 def webBehavior():
     req = request
     values = req.get_json()
@@ -220,60 +251,60 @@ def webBehavior():
     curous.execute(sql)
     data = pojo._weblog(curous.fetchall())
     print(data)
-    warning=[];
+    warning = [];
 
-    statistics={}
-    elecShop={}
-    live={}
-    game={}
+    statistics = {}
+    elecShop = {}
+    live = {}
+    game = {}
     for p in data:
-        type=p['type']
-        if  not type ==None:
+        type = p['type']
+        if not type == None:
             if not type in statistics.keys():
-                statistics[type]=1
+                statistics[type] = 1
             else:
-                statistics[type]+=1
+                statistics[type] += 1
 
-
-        if type=='直播'or type=='电商'or type=='游戏':
+        if type == '直播' or type == '电商' or type == '游戏':
             strs = re.findall(u'\.\w+\.', p['host'])
             p['host']
             try:
-                p['host']=(strs[0][1:len(strs[0]) - 1])
+                p['host'] = (strs[0][1:len(strs[0]) - 1])
             except:
-                p['host']='othor'
-            name=p['host']
-            if type=='直播':
+                p['host'] = 'othor'
+            name = p['host']
+            if type == '直播':
                 if name in live:
-                    live[name]+=1
-                else:live[name]=1
-            if type=='电商':
+                    live[name] += 1
+                else:
+                    live[name] = 1
+            if type == '电商':
                 if name in elecShop:
-                    elecShop[name]+=1
-                else:elecShop[name]=1
-            if type=='游戏':
+                    elecShop[name] += 1
+                else:
+                    elecShop[name] = 1
+            if type == '游戏':
                 if name in game:
-                    game[name]+=1
-                else:game[name]=1
+                    game[name] += 1
+                else:
+                    game[name] = 1
             warning.append(p)
-    elecShop =crab.dictSort(elecShop)
-    statistics=crab.dictSort(statistics)
-    rejson={
-        "statistics":statistics,
-        "warning":{
-            "statistics":{
-                "elecShop":elecShop,
-                "live":live,
-                "game":game
+    elecShop = crab.dictSort(elecShop)
+    statistics = crab.dictSort(statistics)
+    rejson = {
+        "statistics": statistics,
+        "warning": {
+            "statistics": {
+                "elecShop": elecShop,
+                "live": live,
+                "game": game
             },
-            "base":warning
+            "base": warning
         }
     }
     res = getResponse(make_response(str(rejson).replace("\'", "\"")))
     res.headers['Content-Type'] = "application/json;charset=utf-8"
-    return res,200
-
-
+    return res, 200
 
 
 if __name__ == "__main__":

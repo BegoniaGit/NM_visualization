@@ -75,16 +75,42 @@ function update_base_net_info() {
         base_info['email']['download']+
         base_info['ssh']['download']
     )
-    overtime_count=(redata['warning']['overtime'].length)
-    overamount_count=(redata['warning']['overamount'].length)
+    overtime_count+=(redata['warning']['overtime'].length)
+    overamount_count+=(redata['warning']['overamount'].length)
 
-    el_connectcount_total.innerText = connectcount_total
-    el_uplink_amount_count.innerText = uplink_amount_count
-    el_downlink_amount_count.innerText = downlink_amount_count
+    el_connectcount_total.innerText = connectcount_total+"次"
+    el_uplink_amount_count.innerText = number_simplify (uplink_amount_count)
+    el_downlink_amount_count.innerText = number_simplify (downlink_amount_count)
     el_email_risk_count.innerText = email_risk_count
     el_not_worknet_count.innerText = not_worknet_count
     el_overtime_count.innerText = overtime_count
     el_overamount_count.innerText = overamount_count
+}
+
+/**
+ * 由于统计数字太长,按长度进行单位变化
+ */
+function number_simplify (num) {
+    num = parseInt(num / 8);
+    res = 'B'
+
+    if (num.toString().length > 4) {
+        num = parseInt(num / 1024)
+        res = 'KB'
+    }
+    if (num.toString().length > 4) {
+        num = parseInt(num / 1024)
+        res = 'MB'
+    }
+    if (num.toString().length > 4) {
+        num = parseInt(num / 1024)
+        res = 'GB'
+    }
+    if (num.toString().length > 4) {
+        num = parseInt(num / 1024)
+        res = 'TB'
+    }
+    return num+res;
 }
 
 /**
@@ -128,9 +154,10 @@ function loadXMLDoc() {
 
             update_req_time(redata['offset'])
 
-
+            update_network_traffic_warning_chart()
             update_base_proportion_chart()
             update_base_net_info()
+            update_network_hot_chart()
         }
     }
 
@@ -167,6 +194,7 @@ function loadeweb() {
 
             update_base_proportion_chart()
             update_base_net_info()
+
         }
     }
 
