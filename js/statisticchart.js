@@ -225,7 +225,11 @@ var network_hot_data= {
             show: true
         },
         axisLabel:{
-            rotate: 45
+            rotate: 45,
+            textStyle: {
+                color: COLOR_M,
+                fontSize: 10,
+            }
         }
     },
     yAxis: {
@@ -233,6 +237,14 @@ var network_hot_data= {
             data: hot_item_list,
             splitArea: {
             show: true
+        },
+        axisLabel:{
+            // rotate: 45,
+            textStyle: {
+                fontSize: 10,
+                color: COLOR_M
+
+            }
         }
     },
     visualMap: {

@@ -1,12 +1,17 @@
 //基本信息图参数设置
+//文字颜色全局变量
+var COLOR_H='#fff',
+    COLOR_M='#b5b6b2',
+    COLOR_L='#8b8b8b'
+
 
 timeArray = ['', '', '', '', '', '', '']
 
 var fileData = {
     title: {
-        text: '文件流量/MB',
+        text: '文件流量/bit',
         textStyle:{
-            color:'#fff'
+            color:COLOR_M
         }
     },
     tooltip: {
@@ -19,7 +24,14 @@ var fileData = {
         }
     },
     legend: {
-        data: ['文件流量上行', '文件流量下行']
+        data: ['文件流量上行', '文件流量下行'],
+        right: 2,
+        itemWidth: 7,
+        itemHeight: 7,
+        textStyle: {
+            fontSize: 10,
+            color:COLOR_M
+        }
     },
     grid: {
         left: '3%',
@@ -31,7 +43,13 @@ var fileData = {
         {
             type: 'category',
             boundaryGap: false,
-            data: ['', '', '', '', '', '', '']
+            data: ['', '', '', '', '', '', ''],
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: COLOR_M
+                }
+            }
         }
     ],
     yAxis: [
@@ -43,6 +61,12 @@ var fileData = {
                     // 使用深浅的间隔色
                     color: ['#424242']
                 }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: COLOR_M
+                }
             }
         }
     ],
@@ -50,6 +74,7 @@ var fileData = {
         {
             name: '文件流量上行',
             type: 'line',
+            smooth:true,
             stack: '总量',
             areaStyle: {},
             data: [0, 0, 0, 0, 0, 0, 0]
@@ -57,6 +82,7 @@ var fileData = {
         {
             name: '文件流量下行',
             type: 'line',
+            smooth:true,
             stack: '总量',
             areaStyle: {},
             data: [0, 0, 0, 0, 0, 0, 0]
@@ -67,7 +93,10 @@ var fileData = {
 
 var databaseData = {
     title: {
-        text: '数据库流量/MB'
+        text: '数据库流量/bit',
+        textStyle:{
+            color:COLOR_M
+        }
     },
     tooltip: {
         trigger: 'axis',
@@ -79,7 +108,14 @@ var databaseData = {
         }
     },
     legend: {
-        data: ['数据库流量上行', '数据库流量下行']
+        data: ['数据库流量上行', '数据库流量下行'],
+        right: 2,
+        itemWidth: 7,
+        itemHeight: 7,
+        textStyle: {
+            fontSize: 10,
+            color:COLOR_M
+        }
     },
     grid: {
         left: '3%',
@@ -91,7 +127,13 @@ var databaseData = {
         {
             type: 'category',
             boundaryGap: false,
-            data: ['', '', '', '', '', '', '']
+            data: ['', '', '', '', '', '', ''],
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: COLOR_M
+                }
+            }
         }
     ],
     yAxis: [
@@ -103,6 +145,12 @@ var databaseData = {
                     // 使用深浅的间隔色
                     color: ['#424242']
                 }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: COLOR_M
+                }
             }
         }
     ],
@@ -110,6 +158,7 @@ var databaseData = {
         {
             name: '数据库流量上行',
             type: 'line',
+            smooth:true,
             stack: '总量',
             areaStyle: {},
             data: [0, 0, 0, 0, 0, 0, 0]
@@ -117,6 +166,7 @@ var databaseData = {
         {
             name: '数据库流量下行',
             type: 'line',
+            smooth:true,
             stack: '总量',
             areaStyle: {},
             data: [0, 0, 0, 0, 0, 0, 0]
@@ -126,7 +176,10 @@ var databaseData = {
 
 var httpemData = {
     title: {
-        text: 'http及邮件流量/MB',
+        text: '邮件流量/bit',
+        textStyle:{
+            color:COLOR_M
+        },
         left: 12
     },
     tooltip: {
@@ -139,12 +192,15 @@ var httpemData = {
         }
     },
     legend: {
-        data: ['http上行', 'http下行', "邮箱上行", "邮箱下行"],
+        data: [
+            // 'http上行', 'http下行',
+            "邮箱上行", "邮箱下行"],
         right: 2,
         itemWidth: 7,
         itemHeight: 7,
         textStyle: {
-            fontSize: 10
+            fontSize: 10,
+            color:COLOR_M
         }
     },
     // toolbox: {
@@ -164,7 +220,13 @@ var httpemData = {
         {
             type: 'category',
             boundaryGap: false,
-            data: ['', '', '', '', '', '', '']
+            data: ['', '', '', '', '', '', ''],
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: COLOR_M
+                }
+            }
         }
     ],
     yAxis: [
@@ -176,27 +238,36 @@ var httpemData = {
                     // 使用深浅的间隔色
                     color: ['#424242']
                 }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: COLOR_M
+                }
             }
         }
     ],
     series: [
-        {
-            name: 'http上行',
-            type: 'line',
-            stack: '总量',
-            areaStyle: {},
-            data: [0, 0, 0, 0, 0, 0, 0]
-        },
-        {
-            name: 'http下行',
-            type: 'line',
-            stack: '总量',
-            areaStyle: {},
-            data: [0, 0, 0, 0, 0, 0, 0]
-        },
+        // {
+        //     name: 'http上行',
+        //     type: 'line',
+        //     smooth:true,
+        //     stack: '总量',
+        //     areaStyle: {},
+        //     data: [0, 0, 0, 0, 0, 0, 0]
+        // },
+        // {
+        //     name: 'http下行',
+        //     type: 'line',
+        //     smooth:true,
+        //     stack: '总量',
+        //     areaStyle: {},
+        //     data: [0, 0, 0, 0, 0, 0, 0]
+        // },
         {
             name: '邮箱上行',
             type: 'line',
+            smooth:true,
             stack: '总量',
             areaStyle: {},
             data: [0, 0, 0, 0, 0, 0, 0]
@@ -204,6 +275,7 @@ var httpemData = {
         {
             name: '邮箱下行',
             type: 'line',
+            smooth:true,
             stack: '总量',
             areaStyle: {},
             data: [0, 0, 0, 0, 0, 0, 0]
@@ -213,7 +285,10 @@ var httpemData = {
 
 var sshData = {
     title: {
-        text: 'SSH流量/MB'
+        text: 'SSH流量/bit',
+        textStyle:{
+            color:COLOR_M
+        }
     },
     tooltip: {
         trigger: 'axis',
@@ -225,7 +300,14 @@ var sshData = {
         }
     },
     legend: {
-        data: ['SSH命令流量上行', 'SSH命令流量下行']
+        data: ['SSH命令流量上行', 'SSH命令流量下行'],
+        right: 2,
+        itemWidth: 7,
+        itemHeight: 7,
+        textStyle: {
+            fontSize: 10,
+            color:COLOR_M
+        }
     },
 
     grid: {
@@ -238,7 +320,13 @@ var sshData = {
         {
             type: 'category',
             boundaryGap: false,
-            data: ['', '', '', '', '', '', '']
+            data: ['', '', '', '', '', '', ''],
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: COLOR_M
+                }
+            }
         }
     ],
     yAxis: [
@@ -250,6 +338,12 @@ var sshData = {
                     // 使用深浅的间隔色
                     color: ['#424242']
                 }
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: COLOR_M
+                }
             }
         }
     ],
@@ -257,6 +351,7 @@ var sshData = {
         {
             name: 'SSH命令流量上行',
             type: 'line',
+            smooth:true,
             stack: '总量',
             areaStyle: {},
             data: [0, 0, 0, 0, 0, 0, 0]
@@ -264,6 +359,7 @@ var sshData = {
         {
             name: 'SSH命令流量下行',
             type: 'line',
+            smooth:true,
             stack: '总量',
             areaStyle: {},
             data: [0, 0, 0, 0, 0, 0, 0]
@@ -304,26 +400,27 @@ function updateBaseChart(){
     databasechart.setOption(databaseData)
 
     //http email chart
+    // upd=httpemData['series'][0]['data']
+    // downd=httpemData['series'][1]['data']
+    // for(let i=0;i<upd.length-1;i++){
+    //     upd[i]=upd[i+1]
+    //     downd[i]=downd[i+1]
+    // }
+    // upd[upd.length-1]=redata['base']['http']['upload']
+    // downd[upd.length-1]=redata['base']['http']['download']
+    // httpemData['series'][0]['data']=upd
+    // httpemData['series'][1]['data']=downd
+
     upd=httpemData['series'][0]['data']
     downd=httpemData['series'][1]['data']
     for(let i=0;i<upd.length-1;i++){
         upd[i]=upd[i+1]
         downd[i]=downd[i+1]
     }
-    upd[upd.length-1]=redata['base']['http']['upload']
-    downd[upd.length-1]=redata['base']['http']['download']
-    httpemData['series'][0]['data']=upd
-    httpemData['series'][1]['data']=downd
-    upd=httpemData['series'][2]['data']
-    downd=httpemData['series'][3]['data']
-    for(let i=0;i<upd.length-1;i++){
-        upd[i]=upd[i+1]
-        downd[i]=downd[i+1]
-    }
     upd[upd.length-1]=redata['base']['email']['upload']
     downd[upd.length-1]=redata['base']['email']['download']
-    httpemData['series'][2]['data']=upd
-    httpemData['series'][3]['data']=downd
+    httpemData['series'][0]['data']=upd
+    httpemData['series'][1]['data']=downd
     httpemchart.setOption(httpemData)
 
 

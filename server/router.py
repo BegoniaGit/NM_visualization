@@ -110,7 +110,7 @@ def tcplog():
             warning_overamount_count += 1
 
         proto = p['proto']
-        if proto == 'smtps':
+        if proto == 'smtp':
             base_email_upload += int(p['uplink_length'])
             base_email_download += int(p['downlink_length'])
             proportion_email += 1
