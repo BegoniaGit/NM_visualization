@@ -12,7 +12,6 @@ function updateTimeArray(offset) {
     }
     timeArray[timeArray.length - 1] = offsetToTime(offset);
 
-    console.log(timeArray)
     fileData['xAxis'][0]['data'] = timeArray
     databaseData['xAxis'][0]['data'] = timeArray
     httpemData['xAxis'][0]['data'] = timeArray
@@ -86,3 +85,17 @@ window.onload = function() {
     }, 1000);
 };
 
+var random = function (max) {
+    return (Math.random() * max).toFixed(3);
+};
+
+
+function convertData(dic_data,num){
+    let count=0;
+    let re={}
+    for(p in dic_data){
+        re[p]=10+(num-count)*5
+        if((++count)==num)break
+    }
+    return re
+}

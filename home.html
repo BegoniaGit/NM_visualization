@@ -38,7 +38,8 @@
                 </div>
                 <div style="width: 100%;height: 50%;display: table">
                     <div style="width: 50%;height: 100%;display: table-cell;">
-                        <div id="httpem" style="width:90%;height: 90%"></div>
+                        <div id="httpem" style="width:90%;height: 90%;"></div>
+
                     </div>
                     <div style="width: 50%;height: 100%;display: table-cell;">
                         <div id="ssh" style="width:90%;height: 90%"></div>
@@ -50,18 +51,18 @@
         <!--右侧统计-->
         <div class="right">
             <div class="text_show" style="display: table;padding: auto">
-                <div style="width: 33%;height: 100%;display: table-cell;color: cornflowerblue;">
+                <div style="width: 33%;height: 100%;display: table-cell;color: #346375;">
                     <span style="">网络基本信息</span><br>
                     <span>网络总连接数:</span><span id="connectcount_total"></span><br>
                     <span>流量上行总量:</span><span id="uplink_amount_count"></span><br>
                     <span>流量下行总量:</span><span id="downlink_amount_count"></span>
                 </div>
-                <div style="width: 33%;height: 100%;display: table-cell;color: #f24b43">
+                <div style="width: 33%;height: 100%;display: table-cell;color: #a4201e">
                     <span>危险访问及邮件</span><br>
                     <span>邮箱诈骗信息总量:</span><span id="email_risk_count"></span><br>
                     <span>非工作网站请求总量:</span><span id="not_worknet_count"></span>
                 </div>
-                <div style="width: 33%;height: 100%;display: table-cell;color: darkorange">
+                <div style="width: 33%;height: 100%;display: table-cell;color: #e57d60">
                     <span>网络流量警告</span><br>
                     <span>网络超时连接总量:</span><span id="overtime_count"></span><br>
                     <span>高流量连接总量:</span><span id="overamount_count"></span>
@@ -70,7 +71,8 @@
             <div class="list_statistics" style="">
 
                 <div style="width:100%;height: 50%;display: table">
-                    <div style="width: 60%;height: 100%;display: table-cell"></div>
+                    <div id="web_category_pop" style="width: 30%;height: 100%;display: table-cell"></div>
+                    <div id="network_name_chart" style="width: 30%;height: 100%;display: table-cell"></div>
                     <div id="network_traffic_warning_chart" style="width: 40%;height:100%;display: table-cell"></div>
                 </div>
                 <div style="width: 100%;height: 50%;display: table">
@@ -93,18 +95,30 @@
             <div class="operation" style="padding-bottom: 10px;background-color: #2c4755;display: table;">
                 <div style="width: 60%;height: 100%;display: table-cell;">
                     <h4>时间选择</h4>
-                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">日&nbsp&nbsp&nbsp期 :&nbsp<select id="day_select" onchange="change_day_select()"></select></h6>
-                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">时间段:&nbsp<select id="time_select" onchange="change_time_select()"></select></h6>
-                    <button onclick="dynamic()" style="margin: 10px">监测动态</button>
+                    <span class="oper_span" style="padding: 7px;padding-bottom: 5px;padding-top: 5px">日&nbsp&nbsp&nbsp期 :&nbsp<select id="day_select" onchange="change_day_select()"></select></span>
+
+                    <span class="oper_span" style="font-size:12px;padding-bottom: 5px;font-weight: bold;padding-top: 5px">时间段:&nbsp<select id="time_select" onchange="change_time_select()"></select></span>
+                    <br>
+                    <button onclick="dynamic()" style="margin: 10px">动态监测</button>
                     <button onclick="choice_dynamic()" style="margin: 10px">选择监测</button>
                     <button onclick="dynamic_pause()" style="margin: 10px">暂停监测</button>
+                    <br>
+                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">刷新频率:</select></h6>
+                    <button onclick="back_time()" style="margin: 10px">-0.5s</button>
+                    <button onclick="over_time()" style="margin: 10px;text-align: right">+0.5s</button><br>
 
                 </div>
                 <div style="width: 40%;height: 100%;display: table-cell;">
-                    <h4>分类查看</h4>
-                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">分&nbsp&nbsp&nbsp类:&nbsp<select id="class_select" onchange="change_class_select()"></select></h6>
-                    <h6 style="padding: 10px;padding-bottom: 5px;padding-top: 5px">细&nbsp&nbsp&nbsp目:&nbsp<select id="detail_select" onchange="chnageName()"></select></h6>
-                    <button onclick="start_look()" style="margin: 10px">选择查看</button>
+                    <h4>参数设置</h4>
+                    <span class="oper_span" style="padding: 10px;padding-bottom: 5px;padding-top: 5px">清空网络基本信息:</span>
+                    <br>
+                    <button onclick="back_time()" style="margin: 10px">连接数清空</button>
+                    <button onclick="over_time()" style="margin: 10px">流量清空</button>
+                    <br>
+                    <span class="oper_span" style="padding: 10px;padding-bottom: 5px;padding-top: 5px">清空危险检测:</select></span>
+                    <br>
+                    <button onclick="back_time()" style="margin: 10px">邮箱统计清空</button>
+                    <button onclick="over_time()" style="margin: 10px">超时超量清空</button>
                 </div>
             </div>
         </div>
@@ -126,8 +140,8 @@
 <script src="js/lib/mapbox-gl.js"></script>
 <script src='js/lib/echarts-wordcloud.js'></script>
 <script src="js/basechart.js"></script>
-<script src="js/statisticchart.js"></script>
 <script src="js/crabapple.js"></script>
+<script src="js/statisticchart.js"></script>
 <script src="js/home.js"></script>
 <script src="js/operation.js"></script>
 <script>

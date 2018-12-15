@@ -12,15 +12,15 @@ for (let i = 31; i < 126; i++) {
     time_select.options.add(new Option(offset_to_time(i), i));
 }
 
-class_data={
-    kye_file:"文件",
-    kye_database:'数据库',
-    kye_ssh:"SSH交互",
-    kye_http_email:"用户上网"
-}
-
-for(let key in class_data)
-    class_select.options.add(new Option(class_data[key],key))
+// class_data={
+//     kye_file:"文件",
+//     kye_database:'数据库',
+//     kye_ssh:"SSH交互",
+//     kye_http_email:"用户上网"
+// }
+//
+// for(let key in class_data)
+//     class_select.options.add(new Option(class_data[key],key))
 
 let select_choice_day=1
 function change_day_select(){
@@ -53,3 +53,9 @@ function choice_dynamic(){
     req_offset=select_choice_offset;
 }
 
+function back_time() {
+    interval_time-=500
+}
+function over_time() {
+    interval_time+=500
+}

@@ -1,4 +1,11 @@
 var base_proportion_data = {
+    title: {
+        text: '网络请求分布图',
+        textStyle:{
+            color:COLOR_M,
+            fontSize:12
+        }
+    },
     series: {
         type: 'sunburst',
         // highlightPolicy: 'ancestor',
@@ -72,66 +79,93 @@ function update_base_proportion_chart() {
 }
 
 
-// var words_proportion_data = {
-//     tooltip: {},
-//     series: [ {
-//         type: 'wordCloud',
-//         gridSize: 2,
-//         sizeRange: [12, 50],
-//         rotationRange: [-90, 90],
-//         shape: 'pentagon',
-//         width: 600,
-//         height: 400,
-//         drawOutOfBound: true,
-//         textStyle: {
-//             normal: {
-//                 color: function () {
-//                     return 'rgb(' + [
-//                         Math.round(Math.random() * 160),
-//                         Math.round(Math.random() * 160),
-//                         Math.round(Math.random() * 160)
-//                     ].join(',') + ')';
-//                 }
-//             },
-//             emphasis: {
-//                 shadowBlur: 10,
-//                 shadowColor: '#333'
-//             }
-//         },
-//         data: [
-//
-//
-//             {
-//                 name: '科技',
-//                 value: 2
-//             },
-//             {
-//                 name: '新闻',
-//                 value: 12
-//             },
-//             {
-//                 name: '娱乐',
-//                 value: 7
-//             },
-//             {
-//                 name: '综合',
-//                 value: 6
-//             },
-//             {
-//                 name: '搜索',
-//                 value: 1
-//             }
-//         ]
-//     } ]
-// };
-//
-// var words_proportion = echarts.init(document.getElementById('wordsproportion'));
-// words_proportion.setOption(words_proportion_data);
+var words_proportion_data = {
+    tooltip: {},
+    series: [ {
+        type: 'wordCloud',
+        gridSize: 2,
+        sizeRange: [12, 50],
+        rotationRange: [-90, 90],
+        shape: 'pentagon',
+        width: 600,
+        height: 400,
+        drawOutOfBound: true,
+        textStyle: {
+            normal: {
+                color: function () {
+                    return 'rgb(' + [
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160)
+                    ].join(',') + ')';
+                }
+            },
+            emphasis: {
+                shadowBlur: 10,
+                shadowColor: '#333'
+            }
+        },
+        data: [
+
+
+            {
+                name: '科技',
+                value: 2
+            },
+            {
+                name: '新闻',
+                value: 12
+            },
+            {
+                name: '娱乐',
+                value: 7
+            },
+            {
+                name: '综合',
+                value: 6
+            },
+            {
+                name: '搜索',
+                value: 1
+            }
+        ]
+    } ]
+};
+
+var words_proportion_chart = echarts.init(document.getElementById('network_name_chart'));
+words_proportion_chart.setOption(words_proportion_data);
+
+function update_words_proportion_chart(wordsdata){
+    let da_1=wordsdata["elecShop"]
+    let da_2=wordsdata["live"]
+    let da_3=wordsdata["game"]
+    this_data=[]
+    let count=0
+    for(p in da_1){
+        this_data.push({"name":p,"value":da_1[p]/2})
+        if(++count>4)break
+    }
+    for(p in da_2){
+        this_data.push({"name":p,"value":da_2[p]/2})
+        if(++count>4)break
+    }
+    for(p in da_3){
+        this_data.push({"name":p,"value":da_3[p]/2})
+        if(++count>4)break
+    }
+    words_proportion_data.series[0].data=this_data
+    words_proportion_chart.setOption(words_proportion_data);
+}
+
 
 
 var network_traffic_warning_data = {
     title: {
         text: '网络流量警告',
+        textStyle:{
+            color:COLOR_M,
+            fontSize:15
+        }
     },
     tooltip: {
         trigger: 'axis',
@@ -140,7 +174,15 @@ var network_traffic_warning_data = {
         }
     },
     legend: {
-        data: ['超时', '超量']
+        data: ['超时', '超量'],
+        // top: 20,
+        right:2,
+        itemWidth: 7,
+        itemHeight: 7,
+        textStyle: {
+            fontSize: 10,
+            color:COLOR_M
+        }
     },
     grid: {
         left: '3%',
@@ -157,11 +199,23 @@ var network_traffic_warning_data = {
                 // 使用深浅的间隔色
                 color: ['#424242']
             }
+        },
+        axisLabel:{
+            textStyle: {
+                color: COLOR_M,
+                fontSize: 10,
+            }
         }
     },
     yAxis: {
         type: 'category',
-        data: ['1', '2', '3', '4']
+        data: ['1', '2', '3', '4'],
+        axisLabel:{
+            textStyle: {
+                color: COLOR_M,
+                fontSize: 10,
+            }
+        }
     },
     series: [
         {
@@ -210,6 +264,13 @@ function update_network_traffic_warning_chart() {
 let hot_city_list= ['Columbus', 'Beijing', 'Shenyang', 'Shanghai', 'Hangzhou', 'Ningbo', 'Ottawa', 'Wenzhou', 'Manchester', 'othor']
 let hot_item_list= ['文件', '数据库', '浏览器', 'SSH', '邮箱']
 var network_hot_data= {
+    title: {
+        text: '网络危险热力分布图',
+        textStyle:{
+            color:COLOR_M,
+            fontSize:12
+        }
+    },
     tooltip: {
         position: 'top'
     },
@@ -262,7 +323,8 @@ var network_hot_data= {
 
         label: {
             normal: {
-                show: true
+                show: true,
+                color:'#848488'
             }
         },
         itemStyle: {
@@ -313,16 +375,128 @@ function update_network_hot_chart() {
         risk_hot_matrix[it][ol] += 1;
     }
 
+    let max_hot=10
     let this_data=[];
     for(let i=0;i<5;i++){
         for(let j=0;j<10;j++){
             this_data.push([i,j,risk_hot_matrix[i][j]])
+            max_hot=max_hot>risk_hot_matrix[i][j]?max_hot:risk_hot_matrix[i][j]
         }
     }
 
     this_data = this_data.map(function (item) {
         return [item[1], item[0], item[2] || '-'];
     });
+    network_hot_data.visualMap.max=max_hot
     network_hot_data.series[0].data=this_data;
     network_hot_chart.setOption(network_hot_data);
 }
+
+
+
+/**
+ * 用户行为分布图
+ * @type {{series: Array}}
+ */
+let web_category_pop_data = {
+    backgroundColor:'#191a1a',
+    animation: false,
+    tooltip: {},
+    xAxis: {
+        show:false,
+        type: 'value',
+        min: 0,
+        name: 'xAxis',//x轴的名称
+        nameLocation: 'end',//x轴名称的显示位置'middle'，'end'
+        nameRotate: 30,//坐标轴名字旋转角度值
+        max: 20,
+        gridIndex: 0,//x轴所在的grid的索引，默认位于第一个grid
+        //offset:10,//x轴相对默认位置的偏移，在一个grid中含有多个grid的时候有意义
+        type: 'category',
+        //'category'类目轴 适用于离散的类目数据，为该类型时必须通过 data 设置类目数据。
+        //'time' //时间轴，适用于连续的时序数据，与数值轴相比时间轴带有时间的格式化，在刻度计算上也有所不同，例如会根据跨度的范围来决定使用月，星期，日还是小时范围的刻度。
+        //'log' 对数轴。适用于对数数据。
+        position: 'top',//x轴位于grid的上方还是下方，默认为bottom在下方
+        inverse: false,//是否反向坐标
+        boundaryGap: ['20%', '20%'],//坐标轴两边留白策略，类目轴和非类目轴的设置和表现不一样。
+        //类目轴中 boundaryGap 可以配置为 true 和 false。默认为 true，这时候刻度只是作为分隔线，标签和数据点都会在两个刻度之间的带(band)中间。
+        //非类目轴，包括时间，数值，对数轴，boundaryGap是一个两个值的数组，分别表示数据最小值和最大值的延伸范围，可以直接设置数值或者相对的百分比，在设置 min 和 max 后无效
+        splitLine: {
+            show: false
+        }
+    },
+    yAxis: {
+        show:false,
+        type: 'value',
+        min: 0,
+        max: 20,
+        splitLine: {
+            show: false
+        }
+    },
+    //装载数据
+    series: []
+};
+
+
+var webcategorypopchart = echarts.init(document.getElementById('web_category_pop'));
+
+
+//初始所有圈圈
+
+let allCategories = ["电商", "邮箱", "科技", "直播", "办公", "其他", "视频",
+    "阅读", "新闻", "社交", "论坛", "游戏", "电台", "搜索", "其它", "金融",
+    "综合", "招聘", "旅游", "母婴", "音乐"]
+initpopchart()
+function initpopchart() {
+    for (let i in allCategories) {
+        let alonepop = {
+            name: '',
+            type: 'scatter',
+            itemStyle: {
+                normal: {
+                    opacity: 0.8
+                },
+                // color: '#191a1a',
+            },
+            symbolSize: 0,
+            data: [],
+            label:{
+                show:true,
+                position:'inside',
+                color:'#ffffff',
+                fontStyle: 'oblique',
+                fontSize: 8,
+                formatter:'xxx'
+            }
+        }
+        alonepop.name = allCategories[i]
+        alonepop.data.push([random(20), random(20)]); //随机坐标
+        alonepop.symbolSize = 0
+        web_category_pop_data.series.push(alonepop)
+    }
+    webcategorypopchart.setOption(web_category_pop_data);
+}
+
+//更新圈圈大小
+function update_web_category_pop_chart(statistic) {
+    statistic=convertData(statistic,8)
+    for(let i=0;i< web_category_pop_data.series.length;i++){
+        web_category_pop_data.series[i].symbolSize=0
+        web_category_pop_data.series[i].label.formatter=""
+    }
+    for (let currentCategory in statistic) {
+        console.log(statistic[currentCategory])
+        for(let i=0;i< web_category_pop_data.series.length;i++){
+           if(currentCategory==web_category_pop_data.series[i].name)
+            {
+                web_category_pop_data.series[i].symbolSize=statistic[currentCategory]
+                web_category_pop_data.series[i].label.formatter=currentCategory
+                break
+            }
+
+        }
+    }
+    webcategorypopchart.setOption(web_category_pop_data);
+}
+

@@ -165,47 +165,39 @@ function loadXMLDoc() {
     xmlhttp.open("POST", "http://127.0.0.1:5000/tcp", true);
     xmlhttp.setRequestHeader('Content-Type', 'application/json')
     xmlhttp.send(JSON.stringify({"day": req_day, "offset": req_offset}));
-    // setTimeout(loadXMLDoc, interval_time);
+
 }
     isPost=setInterval(loadXMLDoc,interval_time)
 
 
+/**
+ * 网页统计请求数据全局变量
+ */
 function loadeweb() {
-    var xmlhttp;
+    let xmlhttpweb;
     if (window.XMLHttpRequest) {
         // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-        xmlhttp = new XMLHttpRequest();
+        xmlhttpweb = new XMLHttpRequest();
     }
     else {
         // IE6, IE5 浏览器执行代码
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        xmlhttpweb = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            redata = JSON.parse(xmlhttp.responseText);
-            mapdata['series'][0]['data'] = redata['toplace'];
-            myChart.setOption(mapdata);
+    xmlhttpweb.onreadystatechange = function () {
+        if (xmlhttpweb.readyState == 4 && xmlhttpweb.status == 200) {
+            popdata = JSON.parse(xmlhttpweb.responseText);
+            update_web_category_pop_chart(popdata["statistics"])
+            update_words_proportion_chart(popdata["warning"]["statistics"])
 
-            updateTimeArray(req_offset)
-            updateBaseChart()
-
-            update_req_time(redata['offset'])
-
-
-            update_base_proportion_chart()
-            update_base_net_info()
 
         }
     }
 
-
-    xmlhttp.open("POST", "http://127.0.0.1:5000/tcp", true);
-    xmlhttp.setRequestHeader('Content-Type', 'application/json')
-    xmlhttp.send(JSON.stringify({"day": req_day, "offset": req_offset}));
-    // setTimeout(loadXMLDoc, interval_time);
+    xmlhttpweb.open("POST", "http://127.0.0.1:5000/web/behavior", true);
+    xmlhttpweb.setRequestHeader('Content-Type', 'application/json')
+    xmlhttpweb.send(JSON.stringify({"day": req_day, "offset": req_offset}));
 }
 
-
-
+setInterval(loadeweb,interval_time*6+2500)
 
 

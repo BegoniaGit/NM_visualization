@@ -50,3 +50,9 @@ def dictSort(dict):
                 .replace('\',', '\':')
                 .replace('(', '')
                 .replace(')', ''))
+
+
+def tur_convert_list(data):
+    data=str(data)
+    return data.replace("((","").replace(",))","").replace("(","").replace(",)","").replace("\'","").strip(',').split(',')
+

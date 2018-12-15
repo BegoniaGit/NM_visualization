@@ -9,13 +9,17 @@ import re
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-# db = pymysql.connect(user='root', db='sys', passwd='Gssc123', host='220.166.61.4', port=9906, charset='utf8')
+db = pymysql.connect(user='root', db='sys', passwd='Gssc123', host='220.166.61.4', port=9906, charset='utf8')
 
 
-db = pymysql.connect(user='root', db='hightech', passwd='123456', host='localhost', port=3306, charset='utf8')
+# db = pymysql.connect(user='root', db='hightech', passwd='123456', host='localhost', port=3306, charset='utf8')
 
 
 def getCursor():
+    try:
+        db.ping()
+    except:
+        db.connect()
     cursor = db.cursor()
     return cursor
 
@@ -35,6 +39,7 @@ def tcplog():
         curous = getCursor()
         curous.execute(sql)
         data = pojo._tcpLog(curous.fetchall())
+        curous.close()
         print(data)
         if len(data) > 0:
             break
@@ -47,6 +52,7 @@ def tcplog():
     curous = getCursor()
     curous.execute(sql)
     web_data_temp = (curous.fetchall())
+    curous.close()
     for p in web_data_temp:
         if p[0] != None:
             web_data_statistc.append({"type": p[0], "count": p[1]})
@@ -250,7 +256,10 @@ def webBehavior():
     curous = getCursor()
     curous.execute(sql)
     data = pojo._weblog(curous.fetchall())
-    print(data)
+    curous.close()
+    print("信息数据",data)
+
+
     warning = [];
 
     statistics = {}

@@ -6,13 +6,13 @@ import json
 import time
 import re
 
-file=open("met.csv",mode='r',encoding='utf-8-sig')
-data=csv.reader(file)
-he=next(data)
-for d in data:
-    # print(d)
-    print (u"update weblog set type='{}' where host like concat('%{}%');".format(d[1],d[0]))
-
+# file=open("met.csv",mode='r',encoding='utf-8-sig')
+# data=csv.reader(file)
+# he=next(data)
+# for d in data:
+#     # print(d)
+#     print (u"update weblog set type='{}' where host like concat('%{}%');".format(d[1],d[0]))
+#
 
 
 #
@@ -28,3 +28,12 @@ for d in data:
 # dict=eval(elecShop)
 # print(dict)
 
+
+
+
+def tur_convert_list(data):
+    return data.replace("((","").replace(",))","").replace("(","").replace(",)","").replace("\'","")
+data=str((('电商',), ('邮箱',), ('科技',), ('直播',), ('办公',)))
+
+
+print(tur_convert_list(data).strip(',').split(','))
