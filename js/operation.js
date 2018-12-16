@@ -36,16 +36,17 @@ function change_time_select(){
     select_choice_offset=time_select.options[index].value;
 
 }
-function change_class_select(){
-
-}
 
 function dynamic(){
     isPost=setInterval(loadXMLDoc,interval_time)
+    isWebPost=setInterval(loadeweb,interval_time*6+2500)
+    isEmailPost=setInterval(loadEmail,interval_time*6+2500)
 }
 
 function dynamic_pause(){
     clearInterval(isPost);
+    clearInterval(isWebPost);
+    clearInterval(isEmailPost);
 }
 
 function choice_dynamic(){
@@ -58,4 +59,30 @@ function back_time() {
 }
 function over_time() {
     interval_time+=500
+}
+
+function connect_clear(){
+    connectcount_total=0
+    el_connectcount_total.innerText = connectcount_total+"次"
+
+}
+function link_clear(){
+    uplink_amount_count=0
+    downlink_amount_count = 0
+    el_uplink_amount_count.innerText = number_simplify (uplink_amount_count)
+    el_downlink_amount_count.innerText = number_simplify (downlink_amount_count)
+
+}
+function email_clear(){
+    email_risk_count = 0
+    not_worknet_count = 0
+    el_email_risk_count.innerText = email_risk_count
+    el_not_worknet_count.innerText = not_worknet_count
+
+}
+function over_time_clear(){
+    overtime_count = 0
+    overamount_count = 0
+    el_overtime_count.innerText = overtime_count
+    el_overamount_count.innerText = overamount_count
 }

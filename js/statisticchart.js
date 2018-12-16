@@ -80,15 +80,20 @@ function update_base_proportion_chart() {
 
 
 var words_proportion_data = {
+    title: {
+        text: '非工作网站统计',
+        textStyle:{
+            color:COLOR_M,
+            fontSize:12
+        }
+    },
     tooltip: {},
     series: [ {
         type: 'wordCloud',
         gridSize: 2,
-        sizeRange: [12, 50],
+        sizeRange: [20, 30],
         rotationRange: [-90, 90],
         shape: 'pentagon',
-        width: 600,
-        height: 400,
         drawOutOfBound: true,
         textStyle: {
             normal: {
@@ -109,24 +114,20 @@ var words_proportion_data = {
 
 
             {
-                name: '科技',
+                name: 'alibaba',
                 value: 2
             },
             {
-                name: '新闻',
-                value: 12
+                name: 'baidu',
+                value: 2
             },
             {
-                name: '娱乐',
-                value: 7
+                name: 'jd',
+                value: 2
             },
             {
-                name: '综合',
-                value: 6
-            },
-            {
-                name: '搜索',
-                value: 1
+                name: 'taobao',
+                value: 2
             }
         ]
     } ]
@@ -261,7 +262,7 @@ function update_network_traffic_warning_chart() {
  * 网络热力统计
  * @type
  **/
-let hot_city_list= ['Columbus', 'Beijing', 'Shenyang', 'Shanghai', 'Hangzhou', 'Ningbo', 'Ottawa', 'Wenzhou', 'Manchester', 'othor']
+let hot_city_list= ['Columbus', 'Beijing', 'Shenyang', 'Shanghai', 'Hangzhou', 'Ningbo', 'Ottawa', 'Wenzhou', 'Manchester','Guangzhou']
 let hot_item_list= ['文件', '数据库', '浏览器', 'SSH', '邮箱']
 var network_hot_data= {
     title: {
@@ -370,9 +371,8 @@ function update_network_hot_chart() {
         let item = risk_redies[i];
         let it = hot_item_list.indexOf(item['category'])
         let ol = hot_city_list.indexOf(item['city'])
-        if (ol == -1)
-            ol = 9
-        risk_hot_matrix[it][ol] += 1;
+        if (ol!= -1)
+            risk_hot_matrix[it][ol] += 1;
     }
 
     let max_hot=10
@@ -399,6 +399,13 @@ function update_network_hot_chart() {
  * @type {{series: Array}}
  */
 let web_category_pop_data = {
+    title: {
+        text: '网站类型统计',
+        textStyle:{
+            color:COLOR_M,
+            fontSize:12
+        }
+    },
     backgroundColor:'#191a1a',
     animation: false,
     tooltip: {},
@@ -486,7 +493,6 @@ function update_web_category_pop_chart(statistic) {
         web_category_pop_data.series[i].label.formatter=""
     }
     for (let currentCategory in statistic) {
-        console.log(statistic[currentCategory])
         for(let i=0;i< web_category_pop_data.series.length;i++){
            if(currentCategory==web_category_pop_data.series[i].name)
             {

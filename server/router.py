@@ -4,55 +4,52 @@ import pojo
 from flask import Flask, request, render_template, jsonify, send_from_directory, make_response
 from flask_cors import CORS
 from config import getResponse, log
+from DBUtils.PooledDB import PooledDB
 import crabapple as crab
 import re
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-db = pymysql.connect(user='root', db='sys', passwd='Gssc123', host='220.166.61.4', port=9906, charset='utf8')
 
-
-# db = pymysql.connect(user='root', db='hightech', passwd='123456', host='localhost', port=3306, charset='utf8')
-
-
-def getCursor():
-    try:
-        db.ping()
-    except:
-        db.connect()
-    cursor = db.cursor()
-    return cursor
-
+db_config = {"host": "localhost",
+             "port": 3306,
+             "user": "root",
+             "passwd": "123456",
+             "db": "hightech",
+             "charset": "utf8"
+             }
+spool = PooledDB(pymysql, 10, **db_config)
+def exe(SQL):
+    conn = spool.connection()
+    cur = conn.cursor()
+    cur.execute(SQL)
+    re = cur.fetchall()
+    cur.close()
+    conn.close()
+    return re
 
 @app.route('/tcp', methods=['POST'])
 def tcplog():
     req = request
     values = req.form
     values = req.get_json()
-    print(values)
     offset = int(values['offset'])
     pre_time, suff_time = crab.getTimes(str(values['day']), offset)
-    log("info", pre_time + " " + suff_time)
+    log("INFO","/tcp"+ pre_time + " " + suff_time)
     data = []
     while True:
         sql = u"select * from tcplog where stime >='{}' and stime <'{}'".format(pre_time, suff_time)
-        curous = getCursor()
-        curous.execute(sql)
-        data = pojo._tcpLog(curous.fetchall())
-        curous.close()
-        print(data)
+
+        data = pojo._tcpLog(exe(sql))
+
         if len(data) > 0:
             break
         offset += 1
         pre_time, suff_time = crab.getTimes(str(values['day']), offset)
 
     web_data_statistc = []
-    sql = u"select type,count(*) from weblog where time >='{}' and time <'{}' group by type".format(pre_time,
-                                                                                                    suff_time)
-    curous = getCursor()
-    curous.execute(sql)
-    web_data_temp = (curous.fetchall())
-    curous.close()
+    sql = u"select type,count(*) from weblog where time >='{}' and time <'{}' group by type".format(pre_time,suff_time)
+    web_data_temp = (exe(sql))
     for p in web_data_temp:
         if p[0] != None:
             web_data_statistc.append({"type": p[0], "count": p[1]})
@@ -100,7 +97,6 @@ def tcplog():
         if p['city'] == None:
             p['city'] = 'None'
         if p['over_time'] == '1':
-            print('============over_time============')
             warning_overtime.append(
                 {"sip": p['sip'], "tip": p['dip'],"category":p['category'], "overtime": 123, "country": p['country'], "city": p['city']})
             warning_overtime_count += 1
@@ -157,7 +153,6 @@ def tcplog():
             else:
                 postgresal_count += 1
 
-    print(p['uplink_length'])
 
     rejson = {
         "offset": offset,
@@ -250,22 +245,16 @@ def webBehavior():
     values = req.get_json()
     offset = int(values['offset'])
     pre_time, suff_time = crab.getOneHour(str(values['day']), offset)
-    log("INFO", pre_time + "::" + suff_time)
-
+    log("INFO", "/web/behavior" + pre_time + " " + suff_time)
     sql = "select * from weblog where time >='{}' and time <'{}'".format(pre_time, suff_time)
-    curous = getCursor()
-    curous.execute(sql)
-    data = pojo._weblog(curous.fetchall())
-    curous.close()
-    print("信息数据",data)
-
-
+    data = pojo._weblog(exe(sql))
     warning = [];
 
     statistics = {}
     elecShop = {}
     live = {}
     game = {}
+    total = 0;
     for p in data:
         type = p['type']
         if not type == None:
@@ -276,6 +265,7 @@ def webBehavior():
 
         if type == '直播' or type == '电商' or type == '游戏':
             strs = re.findall(u'\.\w+\.', p['host'])
+            total+=1
             p['host']
             try:
                 p['host'] = (strs[0][1:len(strs[0]) - 1])
@@ -303,6 +293,7 @@ def webBehavior():
     rejson = {
         "statistics": statistics,
         "warning": {
+            "total":total,
             "statistics": {
                 "elecShop": elecShop,
                 "live": live,
@@ -313,6 +304,23 @@ def webBehavior():
     }
     res = getResponse(make_response(str(rejson).replace("\'", "\"")))
     res.headers['Content-Type'] = "application/json;charset=utf-8"
+    return res, 200
+
+
+@app.route('/email/risk', methods=['POST'])
+def emailBehavior():
+    req = request
+    values = req.get_json()
+    offset = int(values['offset'])
+    pre_time, suff_time = crab.getOneHour(str(values['day']), offset)
+    log("INFO", "/email/risk" + pre_time + " " + suff_time)
+
+    sql = "select count(*) from email where risk='1' and time >='{}' and time <'{}'".format(pre_time, suff_time)
+    count=(crab.tur_convert_list(exe(sql)))[0];
+    rejson={
+        "count":count
+    }
+    res = getResponse(make_response(str(rejson).replace("\'", "\"")))
     return res, 200
 
 

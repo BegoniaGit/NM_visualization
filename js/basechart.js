@@ -366,7 +366,7 @@ var sshData = {
         }
     ]
 };
-
+//更新基本图
 function updateBaseChart(){
     //file chart
     let upd=fileData['series'][0]['data']

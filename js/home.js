@@ -36,10 +36,12 @@ var overtime_msg = []
 var redata
 
 //请求周期
-var interval_time=5000
+var interval_time=3000
 
 //循环执行
 var isPost
+var isEmailPost
+var isWebPost
 
 /**
  * 获取对象
@@ -186,6 +188,8 @@ function loadeweb() {
     xmlhttpweb.onreadystatechange = function () {
         if (xmlhttpweb.readyState == 4 && xmlhttpweb.status == 200) {
             popdata = JSON.parse(xmlhttpweb.responseText);
+            console.log(popdata)
+            not_worknet_count+=parseInt(popdata["warning"]["total"])
             update_web_category_pop_chart(popdata["statistics"])
             update_words_proportion_chart(popdata["warning"]["statistics"])
 
@@ -198,6 +202,31 @@ function loadeweb() {
     xmlhttpweb.send(JSON.stringify({"day": req_day, "offset": req_offset}));
 }
 
-setInterval(loadeweb,interval_time*6+2500)
+isWebPost=setInterval(loadeweb,interval_time*2+3000)
+
+function loadEmail() {
+    let httpemil;
+    if (window.XMLHttpRequest) {
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        httpemil = new XMLHttpRequest();
+    }
+    else {
+        // IE6, IE5 浏览器执行代码
+        httpemil = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    httpemil.onreadystatechange = function () {
+        if (httpemil.readyState == 4 && httpemil.status == 200) {
+            re_email = JSON.parse(httpemil.responseText);
+            email_risk_count+=parseInt(re_email['count'])
 
 
+        }
+    }
+
+
+    httpemil.open("POST", "http://127.0.0.1:5000/email/risk", true);
+    httpemil.setRequestHeader('Content-Type', 'application/json')
+    httpemil.send(JSON.stringify({"day": req_day, "offset": req_offset}));
+
+}
+isEmailPost=setInterval(loadEmail,interval_time*2+1000)

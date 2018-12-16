@@ -1,4 +1,4 @@
-#encoding:utf-8
+# encoding:utf-8
 # for i in range(5):
 #     print(i)
 import csv
@@ -29,11 +29,32 @@ import re
 # print(dict)
 
 
+#
+# def tur_convert_list(data):
+#     return data.replace("((","").replace(",))","").replace("(","").replace(",)","").replace("\'","")
+# data=str((('电商',), ('邮箱',), ('科技',), ('直播',), ('办公',)))
+#
+#
+# print(tur_convert_list(data).strip(',').split(','))
 
+import pymysql
+from DBUtils.PooledDB import PooledDB
 
-def tur_convert_list(data):
-    return data.replace("((","").replace(",))","").replace("(","").replace(",)","").replace("\'","")
-data=str((('电商',), ('邮箱',), ('科技',), ('直播',), ('办公',)))
-
-
-print(tur_convert_list(data).strip(',').split(','))
+db_config = {"host": "localhost",
+             "port": 3306,
+             "user": "root",
+             "passwd": "123456",
+             "db": "hightech",
+             "charset": "utf8"
+             }
+spool = PooledDB(pymysql, 10, **db_config)
+def connect_myssql(SQL):
+    conn = spool.connection()  # 以后每次需要数据库连接就是用connection（）函数获取连接
+    cur = conn.cursor()
+    cur.execute(SQL)
+    re = cur.fetchall()
+    cur.close()
+    conn.close()
+    return re
+for i in range(10):
+    print(connect_myssql("select * from email limit {}".format(i)))
