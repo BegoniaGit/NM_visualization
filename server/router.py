@@ -1,23 +1,35 @@
 # encoding:utf-8
+
+#外部文件引入
 import pymysql
 import pojo
+import crabapple as crab
+from config import getResponse, log
+
+#依赖模块
 from flask import Flask, request, render_template, jsonify, send_from_directory, make_response
 from flask_cors import CORS
-from config import getResponse, log
 from DBUtils.PooledDB import PooledDB
-import crabapple as crab
 import re
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
-db_config = {"host": "localhost",
-             "port": 3306,
+#db_config = {"host": "localhost",
+             #"port": 3306,
+            # "user": "root",
+             #"passwd": "123456",
+             #"db": "hightech",
+            # "charset": "utf8"
+            # }
+db_config = {"host": "220.166.61.4",
+             "port": 9906,
              "user": "root",
-             "passwd": "123456",
-             "db": "hightech",
+             "passwd": "Gssc123",
+             "db": "sys",
              "charset": "utf8"
              }
+
 spool = PooledDB(pymysql, 10, **db_config)
 def exe(SQL):
     conn = spool.connection()

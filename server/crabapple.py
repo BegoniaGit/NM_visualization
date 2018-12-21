@@ -2,6 +2,10 @@
 #时间前缀
 time_for='2017-11-{} {}:00'
 def getTimes(day,offset):
+    if int(day)%5==0:
+        day='5'
+    else:
+        day=str(int(day)%5)
     if len(day) < 2:
         day = '0' + day
     hour = int((int(offset)/ 6) + 2)

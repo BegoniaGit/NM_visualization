@@ -162,12 +162,9 @@ function loadXMLDoc() {
             update_network_hot_chart()
         }
     }
-
-
     xmlhttp.open("POST", "http://127.0.0.1:5000/tcp", true);
     xmlhttp.setRequestHeader('Content-Type', 'application/json')
     xmlhttp.send(JSON.stringify({"day": req_day, "offset": req_offset}));
-
 }
     isPost=setInterval(loadXMLDoc,interval_time)
 
@@ -188,15 +185,11 @@ function loadeweb() {
     xmlhttpweb.onreadystatechange = function () {
         if (xmlhttpweb.readyState == 4 && xmlhttpweb.status == 200) {
             popdata = JSON.parse(xmlhttpweb.responseText);
-            console.log(popdata)
             not_worknet_count+=parseInt(popdata["warning"]["total"])
             update_web_category_pop_chart(popdata["statistics"])
             update_words_proportion_chart(popdata["warning"]["statistics"])
-
-
         }
     }
-
     xmlhttpweb.open("POST", "http://127.0.0.1:5000/web/behavior", true);
     xmlhttpweb.setRequestHeader('Content-Type', 'application/json')
     xmlhttpweb.send(JSON.stringify({"day": req_day, "offset": req_offset}));

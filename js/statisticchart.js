@@ -92,7 +92,7 @@ var words_proportion_data = {
         type: 'wordCloud',
         gridSize: 2,
         sizeRange: [20, 30],
-        rotationRange: [-90, 90],
+        rotationRange: [0, 0],
         shape: 'pentagon',
         drawOutOfBound: true,
         textStyle: {
@@ -287,10 +287,10 @@ var network_hot_data= {
             show: true
         },
         axisLabel:{
-            rotate: 45,
+            rotate: 70,
             textStyle: {
                 color: COLOR_M,
-                fontSize: 10,
+                fontSize: 8,
             }
         }
     },

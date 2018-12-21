@@ -1,6 +1,4 @@
 //自定义方法
-
-
 /**
  * 更新时间坐标
  */
@@ -63,8 +61,8 @@ function update_req_time(offset) {
     el_show_time.innerHTML=req_day+'日'+' '+offset_to_time(offset)
 
     req_offset = (parseInt(offset))
-    if (req_offset > 125) {
-        req_offset = 31
+    if (req_offset >= 124) {
+        req_offset = 29
         req_day++
     }
     req_offset++
@@ -73,17 +71,23 @@ function update_req_time(offset) {
 /**
  * 时间展示函数
  */
-window.onload = function() {
-    var show = document.getElementById("show");
-    setInterval(function() {
-        var time = new Date();   // 程序计时的月从0开始取值后+1
-        var m = time.getMonth() + 1;
-        var t = time.getFullYear() + "-" + m + "-"
-            + time.getDate() + " " + time.getHours() + ":"
-            + time.getMinutes() + ":" + time.getSeconds();
-        show.innerHTML = t;
-    }, 1000);
+function time(){
+    var vWeek,vWeek_s,vDay;
+    vWeek = ["星期天","星期一","星期二","星期三","星期四","星期五","星期六"];
+    var date =  new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+    hours = date.getHours();
+    minutes = date.getMinutes();
+    seconds = date.getSeconds();
+    vWeek_s = date.getDay();
+    document.getElementById("show").innerHTML = year + "年" + month + "月" + day + "日" + "\t\t\t" + hours + ":" + minutes +":" + seconds + "\t\t\t" + vWeek[vWeek_s] ;
+
 };
+setInterval(time,1000);
+
+
 
 var random = function (max) {
     return (Math.random() * max).toFixed(3);
