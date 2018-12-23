@@ -1,16 +1,16 @@
 # encoding:utf-8
 
 #外部文件引入
-import pymysql
 import pojo
 import crabapple as crab
 from config import getResponse, log
 
 #依赖模块
-from flask import Flask, request, render_template, jsonify, send_from_directory, make_response
+import re
+import pymysql
 from flask_cors import CORS
 from DBUtils.PooledDB import PooledDB
-import re
+from flask import Flask, request, render_template, jsonify, send_from_directory, make_response
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -326,7 +326,6 @@ def emailBehavior():
     offset = int(values['offset'])
     pre_time, suff_time = crab.getOneHour(str(values['day']), offset)
     log("INFO", "/email/risk" + pre_time + " " + suff_time)
-
     sql = "select count(*) from email where risk='1' and time >='{}' and time <'{}'".format(pre_time, suff_time)
     count=(crab.tur_convert_list(exe(sql)))[0];
     rejson={
