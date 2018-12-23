@@ -59,9 +59,16 @@ html, body, #container {
 }
 
 .left .world_map{
-  width: 100%;
-  height: 40%;
+  width: 98%;
+  height: 35%;
   background-color: #191a1a;
+}
+
+.left #map_time {
+  width: 100%;
+  height: 5%;
+  box-sizing: border-box;
+  padding-right: 20px;
 }
 
 .left .list_show{

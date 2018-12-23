@@ -44,7 +44,7 @@ def getOneHour(day,offset):
         suff_time = str(hour + 1) + ":00"
     return time_for.format(day,pre_time),time_for.format(day,suff_time)
 
-print(getOneHour(1,6))
+
 
 #字典排序
 def dictSort(dict):
