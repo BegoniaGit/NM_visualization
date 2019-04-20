@@ -13,17 +13,7 @@
     执行home.js
 
 
-=================目录====================
-/				                #root
-/config				            #配置文件
-/css				            #样式文件
-/data				            #数据文件
-/js				                #js文件
-	/native_libraries		    #js原生库
-/project_design				    #设计过程原文件
-/test				            #测试文件夹
-/home.html			            #主页
-========================================
+
 
 ## 服务端代码 在server文件夹下,需要单独用pycharm打开运行
 
@@ -57,6 +47,7 @@
 
 基本图接口
 请求 1次/秒
+````python
 url:        /tcp
 method:     post
 request:       {"day":"1","offset":"1"}
@@ -105,14 +96,14 @@ response:
 
             }
 
-
+````
 
 
 上网分析请求
 
 使用tcp请求偏移量,但是web信息按小时返回而在没有信息时返回整天分布,在有信息时返回所在一小时的分类信息
 请求  6秒/次
-
+````python
 url:        /web
 method:     post
 request:    {"day":"1","offset":"1"}
@@ -145,6 +136,7 @@ response:    {                                          //email词图8
                       ],
                   }
               }
+````
 网站浏览和email合为双折线图9
 
 
